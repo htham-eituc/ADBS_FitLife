@@ -1,0 +1,17 @@
+node_modules/
+dist/
+coverage/
+
+.env
+.env.*
+!.env.example
+
+*.bak
+*.mdf
+*.ldf
+
+.vscode/*
+!.vscode/extensions.json
+
+*.log
+.DS_Store
