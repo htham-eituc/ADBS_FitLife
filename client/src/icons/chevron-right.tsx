@@ -1,4 +1,4 @@
-import type { IconProps } from '@/icons/types';
+import type { IconProps } from "@/icons/types";
 
 export function ChevronRightIcon(props: IconProps) {
   return (

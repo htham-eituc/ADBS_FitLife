@@ -1,6 +1,6 @@
-# FitLife Frontend
+﻿# FitLife Frontend
 
-A single-page UI sketch built with React, TypeScript, Vite, Tailwind CSS v4, and TailAdmin components. The interface uses the **Modern** palette, **Be Vietnam Pro**, and a light theme.
+A lightweight UI sketch built with React, TypeScript, Vite, Tailwind CSS v4, and TailAdmin components. The interface uses the **Modern** palette, **Be Vietnam Pro**, and a light theme.
 
 ## Run and check
 
@@ -22,12 +22,13 @@ This project uses npm workspaces. Use the root `package-lock.json` for dependenc
 src/
 ├── components/
 │   ├── layout/       # Header, vertical sidebar, role and profile dropdowns
-│   ├── shared/       # FitLife logo and demo section container
+│   ├── shared/       # Shared tables, dialogs, field displays, and branding
 │   └── ui/           # Reusable TailAdmin primitives and their dependencies
+├── data/             # Demo member data and Invoice/ServicePlan types
 ├── hooks/            # Mobile breakpoint detection
 ├── icons/            # SVG components used by the sketch
 ├── layouts/          # MainLayout: sidebar, header, and content
-├── pages/            # Dashboard: color and button samples
+├── pages/            # Member screens and page-specific calendar/plan components
 ├── utils/            # Tailwind class merging
 ├── App.tsx           # Renders the sketch inside MainLayout
 ├── main.tsx          # React entry point
@@ -71,12 +72,23 @@ The shared logo is [FitLifeIcon.tsx](./src/components/shared/FitLifeIcon.tsx), u
 
 ## Sketch behavior
 
-- The sidebar can collapse on desktop and opens as a drawer on mobile.
-- The header follows TailAdmin's original responsive layout. The three-dot button reveals the account controls on mobile.
-- The search shortcut is Ctrl+K or Cmd+K. Search input is a visual placeholder without a search backend.
-- The role button switches between Member, Trainer, and Staff, displayed as Vietnamese labels. Every role shows the same sketch page; this is not an authentication or authorization system.
-- The separate round avatar opens sample profile information and shows the current role.
-- Dashboard buttons are visual samples without business actions. Dark-mode switching and multilingual support have been removed.
+This iteration is a screen-only prototype, not a functional member portal. The sidebar covers PT scheduling, service plans, invoices, visit/session history, annual loyalty, and profile/card information. Business actions are intentionally disabled; browsing, dialogs, tabs, and calendar navigation work locally.
+
+The schedule uses the original TailAdmin Calendar layout: its toolbar, default month view, view selector, and automatic height. PT event cards alone follow the supplied reference, with a pastel background, colored leading border, title, and secondary time/duration line using existing palette tokens. Booking and read-only details keep the existing dialogs. No custom stylesheet is added.
+
+Invoices and the transaction-history tab reuse TailAdmin Basic Tables / Table Three: the original card, search field, table spacing, status badges, scroll area, and pagination styles. Only FitLife data, labels, document icons, and read-only detail actions are adapted. The date-range button displays the sample period and is disabled in this sketch. Transaction history lists paid invoices; entry/exit and PT history remain separate tabs. No new CSS or dependencies are added.
+
+Invoice details follow the [official TailAdmin Single Invoice demo](https://react-demo.tailadmin.com/single-invoice): issuer/member sections, an item table, totals, and footer actions. The Free repository does not include that Invoice source component; this view is assembled from the existing Dialog, Table, Badge, Separator, and typography primitives. Only known FitLife data is shown; no tax, due date, or discount breakdown is invented. Printing remains disabled in the sketch.
+
+The invoice and service-plan lists share `components/shared/data-table` for search, pagination, the date-range label, empty states, and TailAdmin table presentation. Their row components stay specific to each feature. `data/member.ts` is the single source for member identity and shared invoice/plan types.
+
+Only PT appointments are shown in the calendar, matching QT07/QT08. Gym access belongs to service plans and entry/exit history; Yoga/GroupX class booking is not assumed by the report.
+
+Sample booking, cancellation, attendance confirmation, and review forms do not submit data. Profile fields are not saved, and the member-card panel does not generate a live QR code. Invoice creation/payment and plan activation remain staff-handled workflows; this prototype exposes their information to members.
+
+The rewards screen composes existing TailAdmin Card, Badge, and Progress components: two summary cards for tier and points, a full-width progress section with spending and target amounts, and the existing basic table for tier benefits. The outer card and nested benefit cards are removed to keep the page compact. The current tier uses existing brand colors for emphasis. The year is shown beside the heading. Star, lightning, and check icons come from TailAdmin; colors come from the existing component variants and palette. No custom SVG or stylesheet is added. The progress bar compares annual spending with the next tier threshold.
+
+The annual spending/points/tier figures are illustrative and follow the report's year-based thresholds. Backend member APIs are not implemented; the existing server only exposes its health endpoint. Role switching remains a header demo and does not enforce authorization.
 
 ## Template source and license
 
