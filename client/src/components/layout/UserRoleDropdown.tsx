@@ -9,27 +9,26 @@ import {
 } from "@/components/ui/dropdown";
 import { ChevronDownIcon } from "@/icons/chevron-down";
 import { cn } from "@/utils";
-
-const roles = ["Hội viên", "Huấn luyện viên", "Nhân viên"];
-
-type UserRoleDropdownProps = {
-  role: string;
-  onRoleChange: (role: string) => void;
-};
+import {
+  ROLES,
+  roleLabel,
+  type RoleNavigation,
+  type Role,
+} from "@/layouts/navigation";
 
 export default function UserRoleDropdown({
   role,
   onRoleChange,
-}: UserRoleDropdownProps) {
+}: RoleNavigation) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger
         render={<Button variant="outline" />}
-        aria-label={`Vai trò hiện tại: ${role}`}
+        aria-label={`Vai trò hiện tại: ${roleLabel(role)}`}
       >
-        {role}
+        {roleLabel(role)}
         <ChevronDownIcon
           className={cn(
             "size-5 text-gray-500 duration-200 dark:text-gray-400",
@@ -38,10 +37,13 @@ export default function UserRoleDropdown({
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" sideOffset={12}>
-        <DropdownMenuRadioGroup value={role} onValueChange={onRoleChange}>
-          {roles.map((item) => (
-            <DropdownMenuRadioItem key={item} value={item} closeOnClick>
-              {item}
+        <DropdownMenuRadioGroup
+          value={role}
+          onValueChange={(value) => onRoleChange(value as Role)}
+        >
+          {ROLES.map((item) => (
+            <DropdownMenuRadioItem key={item.id} value={item.id} closeOnClick>
+              {item.label}
             </DropdownMenuRadioItem>
           ))}
         </DropdownMenuRadioGroup>

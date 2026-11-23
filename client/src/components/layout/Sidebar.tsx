@@ -9,27 +9,21 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { CalendarIcon } from "@/icons/calendar";
-import { DumbbellsIcon } from "@/icons/dumbbells";
-import { PageIcon } from "@/icons/page";
-import { HourglassIcon } from "@/icons/hourglass";
-import { StarIcon } from "@/icons/star";
-import { UserIcon } from "@/icons/user";
 import { cn } from "@/utils";
-import type { PageNavigation, PageId } from "@/layouts/navigation";
+import {
+  NAVIGATION,
+  type PageNavigation,
+  type Role,
+} from "@/layouts/navigation";
 
-const items: { page: PageId; label: string; Icon: typeof CalendarIcon }[] = [
-  { page: "schedule", label: "Lịch PT", Icon: CalendarIcon },
-  { page: "plans", label: "Gói dịch vụ", Icon: DumbbellsIcon },
-  { page: "billing", label: "Hóa đơn", Icon: PageIcon },
-  { page: "history", label: "Lịch sử", Icon: HourglassIcon },
-  { page: "rewards", label: "Điểm & hạng", Icon: StarIcon },
-  { page: "profile", label: "Hồ sơ", Icon: UserIcon },
-];
-
-export default function Sidebar({ page, onNavigate }: PageNavigation) {
+export default function Sidebar({
+  role,
+  page,
+  onNavigate,
+}: PageNavigation & { role: Role }) {
   const { open, isHovered, isMobile, setOpenMobile } = useSidebar();
   const showContent = open || isHovered || isMobile;
+  const items = NAVIGATION[role];
 
   return (
     <SidebarRoot side="left" collapsible="icon">

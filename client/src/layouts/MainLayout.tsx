@@ -3,19 +3,21 @@ import Sidebar from "@/components/layout/Sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import type { PropsWithChildren } from "react";
-import type { PageNavigation } from "./navigation";
+import type { PageNavigation, RoleNavigation } from "./navigation";
 
 export default function MainLayout({
   children,
+  role,
+  onRoleChange,
   page,
   onNavigate,
-}: PropsWithChildren<PageNavigation>) {
+}: PropsWithChildren<PageNavigation & RoleNavigation>) {
   return (
     <TooltipProvider>
       <SidebarProvider>
-        <Sidebar page={page} onNavigate={onNavigate} />
+        <Sidebar role={role} page={page} onNavigate={onNavigate} />
         <SidebarInset>
-          <Header />
+          <Header role={role} onRoleChange={onRoleChange} />
           <div
             id="sketch"
             className="p-4 mx-auto w-full max-w-(--breakpoint-2xl) md:p-6"

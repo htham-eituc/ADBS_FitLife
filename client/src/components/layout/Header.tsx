@@ -16,10 +16,10 @@ import { SearchIcon } from "@/icons/search";
 import { XIcon } from "@/icons/x";
 import { cn } from "@/utils";
 import { useEffect, useRef, useState } from "react";
+import type { RoleNavigation } from "@/layouts/navigation";
 
-export default function AppHeader() {
+export default function AppHeader({ role, onRoleChange }: RoleNavigation) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [role, setRole] = useState("Hội viên");
   const [isApplicationMenuOpen, setApplicationMenuOpen] = useState(false);
   const { openMobile, toggleSidebar } = useSidebar();
 
@@ -121,7 +121,7 @@ export default function AppHeader() {
           )}
         >
           <div className="flex items-center gap-2 2xsm:gap-3">
-            <UserRoleDropdown role={role} onRoleChange={setRole} />
+            <UserRoleDropdown role={role} onRoleChange={onRoleChange} />
           </div>
           <ProfileDropdown role={role} />
         </div>

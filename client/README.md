@@ -24,11 +24,11 @@ src/
 │   ├── layout/       # Header, vertical sidebar, role and profile dropdowns
 │   ├── shared/       # Shared tables, dialogs, field displays, and branding
 │   └── ui/           # Reusable TailAdmin primitives and their dependencies
-├── data/             # Demo member data and Invoice/ServicePlan types
+├── data/             # Demo data: member, branch catalog/stock, front desk, staff/payroll, reports
 ├── hooks/            # Mobile breakpoint detection
 ├── icons/            # SVG components used by the sketch
-├── layouts/          # MainLayout: sidebar, header, and content
-├── pages/            # Member screens and page-specific calendar/plan components
+├── layouts/          # MainLayout, roles and per-role navigation (navigation.ts)
+├── pages/            # Member screens plus front-desk/, sales/, trainer/, manager/, director/, gate/
 ├── utils/            # Tailwind class merging
 ├── App.tsx           # Renders the sketch inside MainLayout
 ├── main.tsx          # React entry point
@@ -89,6 +89,23 @@ Sample booking, cancellation, attendance confirmation, and review forms do not s
 The rewards screen composes existing TailAdmin Card, Badge, and Progress components: two summary cards for tier and points, a full-width progress section with spending and target amounts, and the existing basic table for tier benefits. The outer card and nested benefit cards are removed to keep the page compact. The current tier uses existing brand colors for emphasis. The year is shown beside the heading. Star, lightning, and check icons come from TailAdmin; colors come from the existing component variants and palette. No custom SVG or stylesheet is added. The progress bar compares annual spending with the next tier threshold.
 
 The annual spending/points/tier figures are illustrative and follow the report's year-based thresholds. Backend member APIs are not implemented; the existing server only exposes its health endpoint. Role switching remains a header demo and does not enforce authorization.
+
+## Staff screens
+
+The header role menu lists every actor from the process specification. Choosing a role swaps the sidebar to that role's menu (`NAVIGATION` in `layouts/navigation.ts`) and opens its first screen:
+
+| Role | Screens | Processes |
+|---|---|---|
+| Lễ tân | Members (search, register, edit, card/QR code), Point of sale (cash received for cash payments), Entry/exit with manual opening, PT bookings, Member care with viewer-chosen thresholds | QT02, QT03, QT06, QT07, QT11 |
+| Nhân viên bán hàng | Point of sale, Stock receipts, Inventory | QT03, QT05 |
+| Huấn luyện viên | Teaching schedule, Reviews, Payslip by branch | QT07, QT08, QT10 |
+| Quản lý chi nhánh | Catalog (branch, gates, packages, products), Staff (hiring, transfers, resignation), Payroll, Branch reports including a member's visit and PT history | QT01, QT09, QT10, QT11 |
+| Ban giám đốc | System reports, Tier thresholds | QT04, QT11 |
+| Cửa kiểm soát | Card/QR scan form and recent entries | QT06 |
+
+Fields shown on staff screens follow the ERD in the Phase 1 report (for example `CHECKIN.manual_by/manual_reason`, `PAYSLIP` with `PAYSLIP_COMMISSION` per branch, `WORK_ASSIGNMENT` for transfers). Business rules such as tier discounts, points, stock checks, check-in validation and PT overbooking are left to the database; the screens only collect input and show results, and saving actions stay disabled like the member screens. Threshold figures in the demo data are sample rows, not fixed rules.
+
+Staff screens reuse `PageHeading`, `InfoTable`, `DataTable`, `SketchDialog`, `FormSelect` and `InfoField`; `components/shared/StaffPage.tsx` adds a status badge, stat card, section card, bar list (built on Progress) and controlled select/input fields. Report charts are progress bars, so no chart dependency is added.
 
 ## Template source and license
 
