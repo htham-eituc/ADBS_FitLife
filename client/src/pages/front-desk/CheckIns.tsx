@@ -1,3 +1,4 @@
+import { StatCard } from "@/components/shared/StaffPage";
 import { useState } from "react";
 import FormSelect from "@/components/shared/FormSelect";
 import {
@@ -6,11 +7,7 @@ import {
   PageHeading,
 } from "@/components/shared/MemberPage";
 import SketchDialog from "@/components/shared/SketchDialog";
-import {
-  SectionCard,
-  StatCard,
-  StatusBadge,
-} from "@/components/shared/StaffPage";
+import { SectionCard, StatusBadge } from "@/components/shared/StaffPage";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CardDescription } from "@/components/ui/card";
@@ -101,7 +98,6 @@ export default function CheckIns() {
         open={manualOpen}
         onOpenChange={setManualOpen}
         title="Mở cửa thủ công"
-        description="Dùng khi cửa từ chối nhưng lễ tân xác minh hội viên hợp lệ."
         actionLabel="Ghi nhận và mở cửa"
       >
         <FormSelect
@@ -122,9 +118,6 @@ export default function CheckIns() {
             placeholder="Ví dụ: thẻ lỗi, đã xác minh bằng CCCD..."
           />
         </Field>
-        <CardDescription>
-          Lượt được ghi kèm người thực hiện và lý do.
-        </CardDescription>
       </SketchDialog>
     </div>
   );

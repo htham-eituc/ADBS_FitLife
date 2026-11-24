@@ -21,7 +21,7 @@ export const teachingSessions = [
     member: member.name,
     branch: "Chi nhánh Quận 1",
     plan: "PT 10 buổi – còn 8",
-    status: "Chờ hội viên xác nhận",
+    status: "Chờ xác nhận",
     note: "",
   },
   {

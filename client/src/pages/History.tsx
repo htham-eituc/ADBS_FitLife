@@ -89,7 +89,7 @@ export default function History() {
                       color={
                         event.extendedProps.status === "Đã hoàn thành"
                           ? "success"
-                          : event.extendedProps.status === "Chờ bạn xác nhận"
+                          : event.extendedProps.status === "Chờ xác nhận"
                             ? "warning"
                             : "primary"
                       }
@@ -142,13 +142,13 @@ export default function History() {
               />
             </Field>
             <CardDescription>
-              Chỉ đánh giá buổi đã hoàn thành, trong 7 ngày và tối đa một lần.
+              Đánh giá trong 7 ngày sau buổi tập, tối đa một lần.
             </CardDescription>
           </>
         ) : (
           <CardDescription>
-            HLV đã xác nhận. Bạn xác nhận sau khi hoàn thành buổi tập; chỉ trừ
-            buổi khi đủ cả hai xác nhận và lượt check-in hợp lệ.
+            HLV đã xác nhận. Xác nhận của bạn sẽ hoàn tất buổi tập và trừ 1
+            buổi.
           </CardDescription>
         )}
       </SketchDialog>

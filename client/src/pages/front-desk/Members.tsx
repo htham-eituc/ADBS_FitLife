@@ -1,14 +1,14 @@
+import { UsersIcon } from "@/icons/users";
+import { CalendarIcon } from "@/icons/calendar";
+import { HeartIcon } from "@/icons/heart";
+import { StatCard } from "@/components/shared/StaffPage";
 import { useState } from "react";
 import DataTable from "@/components/shared/data-table";
 import FormSelect from "@/components/shared/FormSelect";
 import InfoField from "@/components/shared/InfoField";
 import { PageHeading } from "@/components/shared/MemberPage";
 import SketchDialog from "@/components/shared/SketchDialog";
-import {
-  FormInput,
-  StatCard,
-  StatusBadge,
-} from "@/components/shared/StaffPage";
+import { FormInput, StatusBadge } from "@/components/shared/StaffPage";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CardDescription } from "@/components/ui/card";
@@ -48,13 +48,26 @@ export default function Members() {
         }
       />
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <StatCard label="Hội viên tại chi nhánh" value={members.length} />
-        <StatCard label="Đăng ký trong tháng" value={newThisMonth} />
         <StatCard
+          icon={<UsersIcon />}
+          tone="primary"
+          label="Hội viên tại chi nhánh"
+          value={members.length}
+        />
+        <StatCard
+          icon={<CalendarIcon />}
+          tone="info"
+          label="Đăng ký trong tháng"
+          value={newThisMonth}
+        />
+        <StatCard
+          icon={<HeartIcon />}
+          tone="warning"
           label="Cần chăm sóc"
           value={
             members.filter((item) => item.status !== "Còn hiệu lực").length
           }
+          hintInTooltip
           hint="Sắp hết hạn hoặc không còn gói"
         />
       </div>
@@ -121,7 +134,6 @@ export default function Members() {
         open={registerOpen}
         onOpenChange={setRegisterOpen}
         title="Đăng ký hội viên"
-        description="Kiểm tra chưa có hồ sơ trùng trước khi tạo mới."
         actionLabel="Tạo hồ sơ và cấp thẻ"
       >
         <FormInput id="reg-name" label="Họ tên" autoComplete="off" />
@@ -145,8 +157,7 @@ export default function Members() {
           />
         </div>
         <CardDescription>
-          SĐT, email, CCCD và mã thẻ/QR không được trùng. Hội viên mới bắt đầu ở
-          hạng Silver với 0 điểm; mua gói tại màn hình Bán hàng.
+          Số điện thoại, email và CCCD không được trùng.
         </CardDescription>
       </SketchDialog>
 
@@ -210,9 +221,6 @@ export default function Members() {
                 defaultValue={selected.email}
               />
             </div>
-            <CardDescription>
-              Chỉ sửa các trường được phép; thay đổi quan trọng được lưu vết.
-            </CardDescription>
           </>
         )}
       </SketchDialog>

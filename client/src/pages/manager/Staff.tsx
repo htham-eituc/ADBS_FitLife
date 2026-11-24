@@ -1,3 +1,4 @@
+import TransferAppointments from "@/components/shared/TransferAppointments";
 import { useState } from "react";
 import FormSelect from "@/components/shared/FormSelect";
 import InfoField from "@/components/shared/InfoField";
@@ -168,7 +169,7 @@ export default function Staff() {
         onOpenChange={(open) => {
           if (!open) setSelected(null);
         }}
-        title={selected ? `${selected.name} · ${selected.id}` : "Nhân viên"}
+        title={selected ? `${selected.name} - ${selected.id}` : "Nhân viên"}
         actionLabel="Lưu thay đổi"
       >
         {selected && (
@@ -225,14 +226,11 @@ export default function Staff() {
                 description="Mức lương mới có ngày hiệu lực riêng."
               />
             </div>
-            <CardDescription>
-              Các giai đoạn công tác của một nhân viên không chồng lấn; mức
-              lương của cùng nhân viên không trùng ngày hiệu lực.
-            </CardDescription>
           </>
         )}
       </SketchDialog>
 
+      <TransferAppointments />
       <SketchDialog
         open={transferOpen}
         onOpenChange={setTransferOpen}
@@ -254,10 +252,8 @@ export default function Staff() {
           />
         </div>
         <CardDescription>
-          Hệ thống đóng giai đoạn cũ vào ngày trước hiệu lực và mở giai đoạn mới
-          tại chi nhánh đích. Nếu nhân viên là HLV, các lịch Đã đặt tại chi
-          nhánh cũ từ ngày hiệu lực được liệt kê để lễ tân đổi HLV hoặc hủy.
-          Không có bước duyệt; ngày hiệu lực không được thuộc kỳ lương đã chốt.
+          Ngày hiệu lực không được thuộc kỳ lương đã chốt. Với HLV, cần xử lý
+          các lịch bị ảnh hưởng.
         </CardDescription>
       </SketchDialog>
 
@@ -280,9 +276,6 @@ export default function Staff() {
           />
           <FormInput id="new-staff-start" label="Ngày bắt đầu" type="date" />
         </div>
-        <CardDescription>
-          Mã nhân viên không trùng; lương cơ bản phải lớn hơn 0.
-        </CardDescription>
       </SketchDialog>
 
       <SketchDialog
@@ -293,10 +286,6 @@ export default function Staff() {
       >
         <FormSelect label="Nhân viên" options={staffOptions} />
         <FormInput id="leave-date" label="Ngày nghỉ việc" type="date" />
-        <CardDescription>
-          Hệ thống đóng giai đoạn công tác cuối vào ngày nghỉ việc và giữ lại hồ
-          sơ, không xóa.
-        </CardDescription>
       </SketchDialog>
     </div>
   );

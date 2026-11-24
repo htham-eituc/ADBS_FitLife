@@ -1,15 +1,10 @@
 import { isoDate, member } from "./member";
 
-export const TIERS = [
-  { name: "Silver", threshold: 0, discount: 0 },
-  { name: "Gold", threshold: 20000000, discount: 5 },
-  { name: "Platinum", threshold: 50000000, discount: 10 },
-] as const;
+import { TIERS } from "./tiers";
+export { TIERS, tierColor } from "./tiers";
 type TierName = (typeof TIERS)[number]["name"];
 export const tierDiscount = (tier: string) =>
   TIERS.find((item) => item.name === tier)?.discount ?? 0;
-export const tierColor = (tier: string) =>
-  tier === "Platinum" ? "primary" : tier === "Gold" ? "warning" : "gray";
 
 export const members = [
   {
@@ -314,7 +309,7 @@ export const ptBookings = [
     member: member.name,
     trainer: "HLV Minh (mẫu)",
     plan: "PT 10 buổi",
-    status: "Chờ hội viên xác nhận",
+    status: "Chờ xác nhận",
   },
   {
     id: "LH2202",

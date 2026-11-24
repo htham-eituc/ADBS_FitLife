@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { CardDescription } from "@/components/ui/card";
 import { TableRow } from "@/components/ui/table";
 import { PencilIcon } from "@/icons/pencil";
-import { TIERS, tierColor } from "@/data/front-desk";
+import { TIERS, tierColor } from "@/data/tiers";
 import { money } from "@/data/member";
 import { tierDistribution } from "@/data/reports";
 
@@ -90,8 +90,7 @@ export default function TierSettings() {
           </div>
         ))}
         <CardDescription>
-          Ngưỡng hạng cao hơn phải lớn hơn ngưỡng hạng thấp hơn. Hội viên được
-          nâng hạng ngay sau lần thanh toán làm chi tiêu năm đạt ngưỡng.
+          Ngưỡng hạng cao hơn phải lớn hơn ngưỡng hạng thấp hơn.
         </CardDescription>
       </SketchDialog>
     </div>

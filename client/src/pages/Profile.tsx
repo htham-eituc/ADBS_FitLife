@@ -1,4 +1,5 @@
-﻿import { useState } from "react";
+import { tierColor } from "@/data/tiers";
+import { useState } from "react";
 import { PageHeading } from "@/components/shared/MemberPage";
 import SketchDialog from "@/components/shared/SketchDialog";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -85,7 +86,7 @@ export default function Profile() {
       <Card>
         <CardHeader className="flex-row flex-wrap items-center justify-between gap-3">
           <CardTitle className="font-semibold">Thông tin hội viên</CardTitle>
-          <Badge color="primary">{member.tier}</Badge>
+          <Badge color={tierColor(member.tier)}>{member.tier}</Badge>
         </CardHeader>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <Card size="sm" className="bg-gray-50">
@@ -98,9 +99,7 @@ export default function Profile() {
             <InfoField
               label="Hạng hội viên"
               value={
-                <Badge color="primary" variant="solid">
-                  {member.tier}
-                </Badge>
+                <Badge color={tierColor(member.tier)}>{member.tier}</Badge>
               }
             />
           </Card>
@@ -158,13 +157,10 @@ export default function Profile() {
       >
         <CardHeader>
           <CardTitle>{member.name}</CardTitle>
-          <Badge color="primary">{member.tier}</Badge>
+          <Badge color={tierColor(member.tier)}>{member.tier}</Badge>
         </CardHeader>
         <InfoField label="Mã hội viên" value={member.id} />
         <InfoField label="Chi nhánh đăng ký" value={member.branch} />
-        <CardDescription>
-          Dùng thẻ/QR hợp lệ tại cửa kiểm soát để check-in.
-        </CardDescription>
       </SketchDialog>
     </div>
   );

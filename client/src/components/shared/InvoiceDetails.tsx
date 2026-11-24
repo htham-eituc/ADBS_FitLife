@@ -1,4 +1,4 @@
-﻿// Adapted to the official TailAdmin Single Invoice demo layout using existing UI primitives.
+// Adapted to the official TailAdmin Single Invoice demo layout using existing UI primitives.
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -67,7 +67,7 @@ export default function InvoiceDetails({
               </CardHeader>
             </div>
             <div className="max-w-full overflow-x-auto rounded-xl border border-gray-200">
-              <Table>
+              <Table centeredColumns={[0, 2, 3]}>
                 <TableHeader className="border-b border-gray-100 bg-gray-50">
                   <TableRow>
                     <TableCell
@@ -118,14 +118,11 @@ export default function InvoiceDetails({
               <CardDescription>
                 {paid ? "Tổng thực trả" : "Tổng cần thanh toán"}
               </CardDescription>
-              <CardTitle className="text-2xl font-semibold">
+              <CardTitle className="text-2xl font-semibold text-brand-600 dark:text-brand-400">
                 {money(selected.amount)}
               </CardTitle>
             </CardHeader>
             <Separator />
-            <CardDescription>
-              Chỉ hóa đơn đã thanh toán được cộng điểm và kích hoạt gói.
-            </CardDescription>
           </>
         )}
         <DialogFooter>

@@ -28,6 +28,7 @@ import type { CalendarEvent } from "./types";
 import CalendarViewSelect from "./view-selector";
 
 import { INITIAL_EVENTS } from "./data";
+import { CalendarIcon } from "@/icons/calendar";
 
 export default function Calendar({ onBook }: { onBook: () => void }) {
   const locale = "vi-VN";
@@ -162,10 +163,14 @@ export default function Calendar({ onBook }: { onBook: () => void }) {
                 "rounded-lg! border! border-gray-200! bg-white! px-3! py-2! text-sm! font-medium! text-gray-700! shadow-none!",
             },
             addEventButton: {
-              text: "Đặt lịch PT +",
+              text: "Đặt lịch PT",
+              display: "icon-text",
+              iconContent: () => (
+                <CalendarIcon className="size-4 shrink-0" aria-hidden="true" />
+              ),
               click: onBook,
               className:
-                "rounded-lg! border-0! bg-brand-500! px-3! sm:px-4! py-2! sm:py-2.5! text-xs! sm:text-sm! font-medium! text-white hover:bg-brand-600! focus:shadow-none! w-auto!",
+                "inline-flex! items-center! gap-2! rounded-lg! border-0! bg-brand-500! px-3! sm:px-4! py-2! sm:py-2.5! text-xs! sm:text-sm! font-medium! text-white hover:bg-brand-600! focus:shadow-none! w-auto!",
             },
           }}
           // View configurations

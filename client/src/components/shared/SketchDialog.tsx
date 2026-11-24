@@ -16,6 +16,8 @@ export default function SketchDialog({
   title,
   description,
   actionLabel,
+  onAction,
+  actionDisabled = false,
   children,
 }: {
   open: boolean;
@@ -23,11 +25,13 @@ export default function SketchDialog({
   title: string;
   description?: string;
   actionLabel?: string;
+  onAction?: () => void;
+  actionDisabled?: boolean;
   children: ReactNode;
 }) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           {description && <DialogDescription>{description}</DialogDescription>}
@@ -37,7 +41,11 @@ export default function SketchDialog({
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Đóng
           </Button>
-          {actionLabel && <Button disabled>{actionLabel}</Button>}
+          {actionLabel && (
+            <Button disabled={!onAction || actionDisabled} onClick={onAction}>
+              {actionLabel}
+            </Button>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>

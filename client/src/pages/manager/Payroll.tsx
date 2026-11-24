@@ -1,3 +1,4 @@
+import PayrollAdjustments from "@/components/shared/PayrollAdjustments";
 import { useState } from "react";
 import {
   InfoCell,
@@ -130,6 +131,7 @@ export default function Payroll() {
             : "Kỳ đã chốt."}
         </CardDescription>
       </SectionCard>
+      <PayrollAdjustments />
     </div>
   );
 }

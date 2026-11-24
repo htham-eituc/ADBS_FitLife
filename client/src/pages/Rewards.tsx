@@ -17,11 +17,7 @@ import { StarFilledIcon } from "@/icons/star-filled";
 import { CheckIcon } from "@/icons/check";
 import { member, money } from "@/data/member";
 
-const tiers = [
-  { name: "Silver", threshold: 0, discount: 0, color: "gray" },
-  { name: "Gold", threshold: 20000000, discount: 5, color: "warning" },
-  { name: "Platinum", threshold: 50000000, discount: 10, color: "primary" },
-] as const;
+import { TIERS as tiers, tierColor, tierTextClass } from "@/data/tiers";
 
 export default function Rewards() {
   const currentTier =
@@ -46,12 +42,14 @@ export default function Rewards() {
             <CardDescription className="font-bold text-gray-900">
               Hạng hội viên
             </CardDescription>
-            <Badge color={currentTier.color}>
+            <Badge color={tierColor(currentTier.name)}>
               <StarFilledIcon />
               Hạng hiện tại
             </Badge>
           </CardHeader>
-          <CardTitle className="text-3xl font-semibold">
+          <CardTitle
+            className={`text-3xl font-semibold ${tierTextClass(currentTier.name)}`}
+          >
             {currentTier.name}
           </CardTitle>
           <CardFooter className="flex-wrap justify-between gap-3">
@@ -100,7 +98,7 @@ export default function Rewards() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <CardDescription>
             Đã chi tiêu{" "}
-            <strong className="font-semibold text-gray-800">
+            <strong className="font-semibold text-brand-600 dark:text-brand-400">
               {money(member.spending)}
             </strong>
           </CardDescription>
@@ -116,10 +114,10 @@ export default function Rewards() {
           {tiers.map((tier) => (
             <TableRow
               key={tier.name}
-              className={tier.name === member.tier ? "bg-brand-50" : undefined}
+              className={tier.name === member.tier ? "bg-sky-50/50 dark:bg-sky-500/5" : undefined}
             >
               <InfoCell>
-                <Badge color={tier.color}>{tier.name}</Badge>
+                <Badge color={tierColor(tier.name)}>{tier.name}</Badge>
               </InfoCell>
               <InfoCell>
                 {tier.threshold

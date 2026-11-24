@@ -1,3 +1,5 @@
+import { tierColor } from "@/data/tiers";
+import RevenueChart from "@/components/shared/RevenueChart";
 import { useState } from "react";
 import {
   InfoCell,
@@ -17,7 +19,7 @@ import { TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { money } from "@/data/member";
 import {
-  branchRevenue,
+  branchRevenue as sampleBranchRevenue,
   compactMoney,
   percent,
   staffSummary,
@@ -28,6 +30,18 @@ import { PAYROLL_PERIODS } from "@/data/staff";
 
 export default function SystemReports() {
   const [period, setPeriod] = useState(PAYROLL_PERIODS[0]);
+  const periodIndex = PAYROLL_PERIODS.indexOf(period);
+  const branchRevenue = sampleBranchRevenue.map((row) => ({
+    ...row,
+    current:
+      periodIndex === 0
+        ? row.current
+        : Math.round(row.previous * (periodIndex === 1 ? 1 : 0.94)),
+    previous:
+      periodIndex === 0
+        ? row.previous
+        : Math.round(row.previous * (periodIndex === 1 ? 0.94 : 0.9)),
+  }));
   const totalMembers = tierDistribution.reduce(
     (sum, row) => sum + row.value,
     0,
@@ -57,33 +71,58 @@ export default function SystemReports() {
       />
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <StatCard
+          tone="success"
+          highlighted
           label="Doanh thu"
           value={compactMoney(revenue)}
           hint="Chỉ hóa đơn đã thanh toán"
         />
         <StatCard
+          tone="info"
+          highlighted
           label="Hội viên"
           value={totalMembers.toLocaleString("vi-VN")}
         />
         <StatCard
+          tone="primary"
+          highlighted
           label="Lượt check-in"
           value={checkins.toLocaleString("vi-VN")}
         />
       </div>
       <Tabs defaultValue="branches">
-        <TabsList>
+        <TabsList className="max-w-full overflow-x-auto">
           <TabsTrigger value="branches">So sánh chi nhánh</TabsTrigger>
           <TabsTrigger value="packages">Gói doanh thu cao</TabsTrigger>
           <TabsTrigger value="tiers">Phân bổ hạng</TabsTrigger>
           <TabsTrigger value="staff">Nhân sự & lương</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="branches">
+        <TabsContent value="branches" className="space-y-6">
+          <RevenueChart
+            title="So sánh doanh thu chi nhánh"
+            description={`${period} và kỳ trước - Dữ liệu mẫu`}
+            horizontal
+            categories={branchRevenue.map((row) =>
+              row.branch.replace("Chi nhánh ", ""),
+            )}
+            series={[
+              {
+                name: "Kỳ đang xem",
+                data: branchRevenue.map((row) => row.current),
+              },
+              {
+                name: "Kỳ trước",
+                data: branchRevenue.map((row) => row.previous),
+              },
+            ]}
+          />
           <SectionCard
             title={`Doanh thu và hoạt động – ${period}`}
             description="Doanh thu chỉ tính hóa đơn đã thanh toán."
           >
             <InfoTable
+              centeredColumns={[1, 2, 3, 4, 5]}
               headers={[
                 "Chi nhánh",
                 "Doanh thu",
@@ -136,6 +175,7 @@ export default function SystemReports() {
             <BarList
               items={tierDistribution.map((row) => ({
                 ...row,
+                color: tierColor(row.label),
                 note: percent((row.value / totalMembers) * 100),
               }))}
               format={(value) => `${value.toLocaleString("vi-VN")} hội viên`}
@@ -149,6 +189,7 @@ export default function SystemReports() {
             description="Lương và hoa hồng chỉ hiển thị cho vai trò được cấp quyền."
           >
             <InfoTable
+              centeredColumns={[1, 2, 3, 4, 5]}
               headers={[
                 "Chi nhánh",
                 "Nhân viên",

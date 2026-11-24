@@ -1,3 +1,4 @@
+import RevenueChart from "@/components/shared/RevenueChart";
 import { useState } from "react";
 import {
   InfoCell,
@@ -23,9 +24,9 @@ import {
   members,
   ptBookings,
 } from "@/data/front-desk";
-import { formatDate, isoDate, member, money, visits } from "@/data/member";
+import { formatDate, isoDate, member, visits } from "@/data/member";
 import {
-  branchRevenueDays,
+  revenuePeriodSamples,
   checkinSlots,
   compactMoney,
   percent,
@@ -62,7 +63,8 @@ export default function BranchReports() {
       : []),
   ];
   const memberSessions = ptBookings.filter((row) => row.member === picked.name);
-  const revenue = branchRevenueDays.reduce((sum, row) => sum + row.value, 0);
+  const revenueRows = revenuePeriodSamples[period];
+  const revenue = revenueRows.reduce((sum, row) => sum + row.value, 0);
   const checkinTotal = checkinSlots.reduce((sum, row) => sum + row.checkins, 0);
   const peak = checkinSlots.reduce((best, row) =>
     row.checkins > best.checkins ? row : best,
@@ -90,20 +92,26 @@ export default function BranchReports() {
       />
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <StatCard
+          tone="success"
+          highlighted
           label="Doanh thu"
           value={compactMoney(revenue)}
           hint="Chỉ hóa đơn đã thanh toán"
         />
         <StatCard
+          tone="info"
+          highlighted
           label="Lượt check-in"
           value={checkinTotal.toLocaleString("vi-VN")}
         />
         <StatCard
+          tone="primary"
           label="Khung giờ đông nhất"
           value={peak.slot}
           hint={`${peak.checkins} lượt vào`}
         />
         <StatCard
+          tone="warning"
           label="Cần chăm sóc"
           value={expiringPlans.length + inactiveMembers.length}
           hint="Sắp hết hạn hoặc lâu chưa quay lại"
@@ -111,7 +119,7 @@ export default function BranchReports() {
       </div>
 
       <Tabs defaultValue="revenue">
-        <TabsList>
+        <TabsList className="max-w-full overflow-x-auto">
           <TabsTrigger value="revenue">Doanh thu</TabsTrigger>
           <TabsTrigger value="checkins">Ra vào</TabsTrigger>
           <TabsTrigger value="sales">Bán chạy</TabsTrigger>
@@ -121,18 +129,14 @@ export default function BranchReports() {
         </TabsList>
 
         <TabsContent value="revenue">
-          <SectionCard
-            title="Doanh thu theo ngày"
-            description="Chỉ tính hóa đơn đã thanh toán."
-          >
-            <BarList
-              items={branchRevenueDays.map((row) => ({
-                label: formatDate(row.date),
-                value: row.value,
-              }))}
-              format={money}
-            />
-          </SectionCard>
+          <RevenueChart
+            title={`Doanh thu - ${period}`}
+            description="Dữ liệu mẫu minh họa theo kỳ - Chỉ gồm hóa đơn đã thanh toán."
+            categories={revenueRows.map((row) => row.label)}
+            series={[
+              { name: "Doanh thu", data: revenueRows.map((row) => row.value) },
+            ]}
+          />
         </TabsContent>
 
         <TabsContent value="checkins">

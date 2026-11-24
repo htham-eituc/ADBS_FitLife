@@ -25,7 +25,7 @@ export const INITIAL_EVENTS: CalendarEvent[] = [
       calendar: "Warning",
       branch: "Chi nhánh Quận 1",
       trainer: "HLV Minh (mẫu)",
-      status: "Chờ bạn xác nhận",
+      status: "Chờ xác nhận",
     },
   },
   {

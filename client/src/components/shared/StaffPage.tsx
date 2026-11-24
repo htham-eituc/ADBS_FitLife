@@ -1,14 +1,30 @@
+import { InfoIcon } from "@/icons/info";
+import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip";
+import { ChartIcon } from "@/icons/chart";
+import { WalletIcon } from "@/icons/wallet";
+import { UsersIcon } from "@/icons/users";
+import { DoorIcon } from "@/icons/door";
 import type { ReactNode } from "react";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardDescription,
   CardHeader,
+  CardContent,
   CardTitle,
 } from "@/components/ui/card";
 import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Progress } from "@/components/ui/progress-bar";
+import {
+  Progress,
+  ProgressTrack,
+  ProgressIndicator,
+} from "@/components/ui/progress-bar";
 import {
   Select,
   SelectContent,
@@ -22,6 +38,10 @@ type BadgeColor = "primary" | "success" | "error" | "warning" | "info" | "gray";
 
 const STATUS_COLORS: Record<string, BadgeColor> = {
   "Đã thanh toán": "success",
+  "Đã dùng hết": "gray",
+  "Bổ sung": "success",
+  "Khấu trừ": "error",
+  "Chờ áp dụng": "warning",
   "Đã hoàn thành": "success",
   "Còn hiệu lực": "success",
   "Còn lượt": "success",
@@ -34,7 +54,7 @@ const STATUS_COLORS: Record<string, BadgeColor> = {
   "Đã đặt": "primary",
   "Đang trong CN": "primary",
   "Chờ thanh toán": "warning",
-  "Chờ hội viên xác nhận": "warning",
+  "Chờ xác nhận": "warning",
   "Sắp hết hạn": "warning",
   "Chưa chốt": "warning",
   "Có sai lệch": "warning",
@@ -48,7 +68,7 @@ const STATUS_COLORS: Record<string, BadgeColor> = {
 
 export function StatusBadge({
   status,
-  size,
+  size = "sm",
 }: {
   status: string;
   size?: "sm" | "default";
@@ -66,21 +86,94 @@ export function StatCard({
   hint,
   badge,
   className,
+  tone,
+  highlighted = false,
+  icon,
+  hintInTooltip = false,
 }: {
   label: string;
+  tone?: "primary" | "success" | "info" | "warning";
+  highlighted?: boolean;
+  icon?: ReactNode;
   value: ReactNode;
   hint?: ReactNode;
+  hintInTooltip?: boolean;
   badge?: ReactNode;
   className?: string;
 }) {
+  const hintTooltip =
+    hint && hintInTooltip ? (
+      <Tooltip>
+        <TooltipTrigger
+          render={
+            <Button
+              variant="ghost"
+              size="icon-xs"
+              aria-label={`Thông tin ${label}`}
+            />
+          }
+        >
+          <InfoIcon aria-hidden="true" />
+        </TooltipTrigger>
+        <TooltipContent role="tooltip" className="whitespace-normal">{hint}</TooltipContent>
+      </Tooltip>
+    ) : null;
+  if (icon) {
+    return (
+      <Card>
+        <CardHeader className="flex-row items-center gap-3">
+          <Badge color={tone ?? "primary"} size="lg">
+            {icon}
+          </Badge>
+          <CardDescription className="inline-flex items-center gap-1">
+            {label}
+            {hintTooltip}
+          </CardDescription>
+          {badge}
+        </CardHeader>
+        <CardContent className="space-y-2">
+          <CardTitle className="mb-0 text-3xl font-semibold text-brand-600 tabular-nums dark:text-brand-400">
+            {value}
+          </CardTitle>
+          {hint && !hintInTooltip && <CardDescription>{hint}</CardDescription>}
+        </CardContent>
+      </Card>
+    );
+  }
   return (
-    <Card size="sm" className={cn("gap-3", className)}>
+    <Card
+      size="sm"
+      className={cn(
+        "gap-3",
+        highlighted &&
+          "border-brand-200 bg-brand-50 dark:border-brand-500/30 dark:bg-brand-500/15",
+        className,
+      )}
+    >
       <div className="flex items-start justify-between gap-3">
-        <CardDescription>{label}</CardDescription>
+        <CardDescription className="inline-flex items-center gap-1">
+          {label}
+          {hintTooltip}
+        </CardDescription>
+        {tone && (
+          <Badge color={tone} size="lg">
+            {tone === "success" ? (
+              <WalletIcon />
+            ) : tone === "info" ? (
+              <UsersIcon />
+            ) : tone === "warning" ? (
+              <DoorIcon />
+            ) : (
+              <ChartIcon />
+            )}
+          </Badge>
+        )}
         {badge}
       </div>
-      <CardTitle className="mb-0 text-2xl font-semibold">{value}</CardTitle>
-      {hint && <CardDescription>{hint}</CardDescription>}
+      <CardTitle className="mb-0 text-2xl font-semibold text-brand-600 dark:text-brand-400">
+        {value}
+      </CardTitle>
+      {hint && !hintInTooltip && <CardDescription>{hint}</CardDescription>}
     </Card>
   );
 }
@@ -118,18 +211,24 @@ export function BarList({
   items,
   format = (value) => String(value),
 }: {
-  items: { label: string; value: number; note?: string }[];
+  items: { label: string; value: number; note?: string; color?: BadgeColor }[];
   format?: (value: number) => string;
 }) {
   const max = Math.max(1, ...items.map((item) => item.value));
   return (
     <ul className="flex flex-col gap-4">
-      {items.map((item) => (
+      {items.map((item, index) => (
         <li key={item.label} className="flex flex-col gap-1.5">
           <div className="flex items-baseline justify-between gap-3 text-sm">
-            <span className="text-gray-700 dark:text-gray-300">
+            <Badge
+              size="sm"
+              color={
+                item.color ??
+                (["primary", "success", "info", "warning"] as const)[index % 4]
+              }
+            >
               {item.label}
-            </span>
+            </Badge>
             <span className="font-medium whitespace-nowrap text-gray-800 dark:text-white/90">
               {format(item.value)}
               {item.note && (
@@ -142,7 +241,21 @@ export function BarList({
           <Progress
             value={Math.round((item.value / max) * 100)}
             aria-label={item.label}
-          />
+          >
+            {item.color && (
+              <ProgressTrack>
+                <ProgressIndicator
+                  className={
+                    item.color === "gray"
+                      ? "from-gray-300 to-gray-500"
+                      : item.color === "warning"
+                        ? "from-amber-300 to-amber-500"
+                        : undefined
+                  }
+                />
+              </ProgressTrack>
+            )}
+          </Progress>
         </li>
       ))}
     </ul>

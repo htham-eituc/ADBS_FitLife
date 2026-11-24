@@ -29,7 +29,7 @@ export default function GateKiosk() {
     <div className="space-y-6">
       <PageHeading
         title="Cửa kiểm soát"
-        description={`${homeBranch.name} · mở cửa ${homeBranch.open}–${homeBranch.close}.`}
+        description={`${homeBranch.name} - mở cửa ${homeBranch.open}–${homeBranch.close}.`}
       />
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <SectionCard

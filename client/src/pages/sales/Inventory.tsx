@@ -1,14 +1,11 @@
+import { StatCard } from "@/components/shared/StaffPage";
 import { useState } from "react";
 import {
   InfoCell,
   InfoTable,
   PageHeading,
 } from "@/components/shared/MemberPage";
-import {
-  SectionCard,
-  StatCard,
-  StatusBadge,
-} from "@/components/shared/StaffPage";
+import { SectionCard, StatusBadge } from "@/components/shared/StaffPage";
 import { CardDescription } from "@/components/ui/card";
 import {
   InputGroup,

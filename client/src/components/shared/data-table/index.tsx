@@ -8,6 +8,7 @@ import {
   TableCell,
   TableHeader,
   TableRow,
+  getCenteredColumns,
 } from "@/components/ui/table";
 import { formatDate } from "@/data/member";
 import CardHeader from "./card-header";
@@ -15,11 +16,11 @@ import CardFooter from "./card-footer";
 import EmptyState from "./empty-state";
 
 const headerClasses = [
-  "h-11 min-w-44 py-3 ps-5 text-start text-sm font-normal text-gray-500 sm:ps-6 dark:text-gray-400",
-  "h-11 min-w-44 px-4 py-3 text-start text-sm font-normal text-gray-500 dark:text-gray-400",
-  "h-11 min-w-32 px-4 py-3 text-start text-sm font-normal text-gray-500 dark:text-gray-400",
-  "h-11 min-w-36 px-4 py-3 text-start text-sm font-normal text-gray-500 dark:text-gray-400",
-  "h-11 min-w-28 px-4 py-3 text-start text-sm font-normal text-gray-500 dark:text-gray-400",
+  "h-11 min-w-44 py-3 ps-5 text-start text-sm font-semibold text-gray-500 sm:ps-6 dark:text-gray-400",
+  "h-11 min-w-44 px-4 py-3 text-start text-sm font-semibold text-gray-500 dark:text-gray-400",
+  "h-11 min-w-32 px-4 py-3 text-start text-sm font-semibold text-gray-500 dark:text-gray-400",
+  "h-11 min-w-36 px-4 py-3 text-start text-sm font-semibold text-gray-500 dark:text-gray-400",
+  "h-11 min-w-28 px-4 py-3 text-start text-sm font-semibold text-gray-500 dark:text-gray-400",
 ];
 const PAGE_SIZE = 7;
 
@@ -78,7 +79,7 @@ export default function DataTable<T extends { id: string }>({
       />
       <CardContent className="p-0">
         <ScrollArea className="w-full">
-          <Table>
+          <Table centeredColumns={getCenteredColumns(columns)}>
             <TableHeader className="border-y border-gray-100 dark:border-gray-800">
               <TableRow>
                 {columns.map((column, index) => (

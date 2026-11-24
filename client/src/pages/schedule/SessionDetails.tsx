@@ -1,4 +1,4 @@
-﻿import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -49,7 +49,7 @@ export default function SessionDetails({ open, onOpenChange, event }: Props) {
                   color={
                     status === "Đã hoàn thành"
                       ? "success"
-                      : status === "Chờ bạn xác nhận"
+                      : status === "Chờ xác nhận"
                         ? "warning"
                         : "primary"
                   }
@@ -85,7 +85,7 @@ export default function SessionDetails({ open, onOpenChange, event }: Props) {
           <Button disabled>
             {status === "Đã hoàn thành"
               ? "Đánh giá HLV"
-              : status === "Chờ bạn xác nhận"
+              : status === "Chờ xác nhận"
                 ? "Xác nhận buổi tập"
                 : "Hủy lịch"}
           </Button>

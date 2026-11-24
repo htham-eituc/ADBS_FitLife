@@ -1,4 +1,5 @@
-﻿import PlanTable from "./plans/plan-table";
+import SpaTickets from "@/components/shared/SpaTickets";
+import PlanTable from "./plans/plan-table";
 import { useState } from "react";
 import { PageHeading } from "@/components/shared/MemberPage";
 import SketchDialog from "@/components/shared/SketchDialog";
@@ -15,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { plans, formatDate } from "@/data/member";
 
 export default function Plans() {
+  const [planRows, setPlanRows] = useState(plans);
   const [selected, setSelected] = useState<(typeof plans)[number] | null>(null);
   return (
     <div className="space-y-6">
@@ -22,9 +24,21 @@ export default function Plans() {
         title="Gói dịch vụ"
         description="Các gói đã mua, thời hạn và số buổi còn lại."
       />
+      <SpaTickets
+        tickets={planRows}
+        onUse={(id) =>
+          setPlanRows((rows) =>
+            rows.map((row) =>
+              row.id === id
+                ? { ...row, remaining: "0 lượt", status: "Đã dùng hết" }
+                : row,
+            ),
+          )
+        }
+      />
       <PlanTable
         title="Gói dịch vụ của bạn"
-        data={plans}
+        data={planRows}
         onView={setSelected}
       />
       <CardDescription>
@@ -43,9 +57,13 @@ export default function Plans() {
             <Card size="sm" className="bg-gray-50">
               <CardHeader className="flex-row flex-wrap items-center justify-between gap-3">
                 <Badge color="primary">{selected.service}</Badge>
-                <Badge color="success">{selected.status}</Badge>
+                <Badge
+                  color={selected.status === "Đã dùng hết" ? "gray" : "success"}
+                >
+                  {selected.status}
+                </Badge>
               </CardHeader>
-              <CardTitle className="text-2xl font-semibold">
+              <CardTitle className="text-2xl font-semibold text-brand-600 dark:text-brand-400">
                 {selected.remaining}
               </CardTitle>
               <CardDescription>Số buổi/lượt sử dụng còn lại</CardDescription>
@@ -64,11 +82,6 @@ export default function Plans() {
               />
             </div>
             <Separator />
-            {selected.end && (
-              <CardDescription>
-                Gia hạn gói còn hiệu lực sẽ bắt đầu sau ngày hết hạn hiện tại.
-              </CardDescription>
-            )}
           </>
         )}
         <Button variant="outline" disabled>

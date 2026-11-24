@@ -34,7 +34,10 @@ export default function PlanRow({ plan, onView }: PlanRowProps) {
         {plan.remaining}
       </TableCell>
       <TableCell className="min-w-28 px-4 py-3 text-start text-sm whitespace-nowrap">
-        <Badge size="sm" color="success">
+        <Badge
+          size="sm"
+          color={plan.status === "Đã dùng hết" ? "gray" : "success"}
+        >
           {plan.status}
         </Badge>
       </TableCell>

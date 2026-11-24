@@ -87,7 +87,7 @@ export default function StockReceipts() {
         open={open}
         onOpenChange={setOpen}
         title="Lập phiếu nhập"
-        description={`${homeBranch.name} · ${formatDate(isoDate(0))}`}
+        description={`${homeBranch.name} - ${formatDate(isoDate(0))}`}
         actionLabel="Gửi phiếu nhập"
       >
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-[1fr_6rem_8rem]">
@@ -131,7 +131,9 @@ export default function StockReceipts() {
           Thêm dòng
         </Button>
         {lines.length > 0 && (
-          <InfoTable headers={["Sản phẩm", "SL", "Đơn giá", "Thành tiền", ""]}>
+          <InfoTable
+            headers={["Sản phẩm", "Số lượng", "Đơn giá", "Thành tiền", ""]}
+          >
             {lines.map((line, index) => (
               <TableRow key={`${line.product}-${index}`}>
                 <InfoCell>{line.product}</InfoCell>
@@ -156,11 +158,11 @@ export default function StockReceipts() {
             ))}
           </InfoTable>
         )}
-        <CardDescription>
-          {invalid
-            ? "Số lượng và đơn giá nhập phải lớn hơn 0."
-            : "Mỗi dòng ghi đúng một sản phẩm. Phiếu không ghi nhà cung cấp."}
-        </CardDescription>
+        {invalid && (
+          <CardDescription>
+            Số lượng và đơn giá nhập phải lớn hơn 0.
+          </CardDescription>
+        )}
       </SketchDialog>
 
       <SketchDialog
@@ -173,10 +175,10 @@ export default function StockReceipts() {
         {viewing && (
           <>
             <CardDescription>
-              {formatDate(viewing.date)} · {viewing.staff} · {homeBranch.name}
+              {formatDate(viewing.date)} - {viewing.staff} - {homeBranch.name}
             </CardDescription>
             <InfoTable
-              headers={["Sản phẩm", "SL", "Đơn giá nhập", "Thành tiền"]}
+              headers={["Sản phẩm", "Số lượng", "Đơn giá nhập", "Thành tiền"]}
             >
               {viewing.lines.map((line) => (
                 <TableRow key={line.product}>

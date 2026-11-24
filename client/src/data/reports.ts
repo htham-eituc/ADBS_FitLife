@@ -107,3 +107,25 @@ export const staffSummary = BRANCHES.map((branch, index) => ({
   commission: [31, 24, 17, 36, 18, 22, 14, 27, 16, 34, 15, 30][index] * 1e6,
   transfers: [2, 1, 0, 1, 0, 1, 0, 1, 0, 2, 0, 1][index],
 }));
+
+// Illustrative aggregates for previewing report period controls, not backend results.
+export const revenuePeriodSamples: Record<
+  string,
+  { label: string; value: number }[]
+> = {
+  "7 ngày gần nhất": branchRevenueDays.map((row) => ({
+    label: new Date(row.date + "T12:00:00").toLocaleDateString("vi-VN"),
+    value: row.value,
+  })),
+  "Tháng này": [142, 156, 168, 146].map((value, index) => ({
+    label: `Tuần ${index + 1}`,
+    value: value * 1e6,
+  })),
+  "Quý này": [580, 596, 612].map((value, index) => ({
+    label: `Tháng ${index + 1} của quý`,
+    value: value * 1e6,
+  })),
+  "Năm nay": [450, 480, 510, 490, 540, 560, 575, 590, 580, 596, 612, 625].map(
+    (value, index) => ({ label: `Tháng ${index + 1}`, value: value * 1e6 }),
+  ),
+};

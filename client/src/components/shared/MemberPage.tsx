@@ -6,6 +6,7 @@ import {
   TableCell,
   TableHeader,
   TableRow,
+  getCenteredColumns,
 } from "@/components/ui/table";
 
 export function PageHeading({
@@ -32,20 +33,24 @@ export function PageHeading({
 export function InfoTable({
   headers,
   children,
+  centeredColumns = [],
 }: {
   headers: string[];
   children: ReactNode;
+  centeredColumns?: number[];
 }) {
   return (
     <div className="max-w-full overflow-x-auto">
-      <Table>
+      <Table
+        centeredColumns={[...centeredColumns, ...getCenteredColumns(headers)]}
+      >
         <TableHeader className="border-b border-gray-100">
           <TableRow>
             {headers.map((header) => (
               <TableCell
                 key={header}
                 isHeader
-                className="px-5 py-3 text-start text-xs font-medium text-gray-500 sm:px-6"
+                className="px-5 py-3 text-start text-sm font-semibold text-brand-700 sm:px-6"
               >
                 {header}
               </TableCell>
@@ -57,9 +62,9 @@ export function InfoTable({
     </div>
   );
 }
-export function InfoCell({ children }: { children: ReactNode }) {
+export function InfoCell({ children }: { children?: ReactNode }) {
   return (
-    <TableCell className="px-5 py-4 text-start text-sm text-gray-800 sm:px-6">
+    <TableCell className="px-4 py-3 text-start text-sm whitespace-nowrap text-gray-700 dark:text-gray-400 [&_[data-slot=card-description]]:text-xs">
       {children}
     </TableCell>
   );
