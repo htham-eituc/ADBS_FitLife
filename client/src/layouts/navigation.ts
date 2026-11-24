@@ -28,6 +28,7 @@ export type Role =
 export type PageId =
   | "schedule"
   | "plans"
+  | "orders"
   | "billing"
   | "history"
   | "rewards"
@@ -52,7 +53,6 @@ export type PageId =
 
 export type PageNavigation = {
   page: PageId;
-  onNavigate: (page: PageId) => void;
 };
 
 export type RoleNavigation = {
@@ -83,6 +83,7 @@ export const NAVIGATION: Record<Role, NavItem[]> = {
   member: [
     { page: "schedule", label: "Lịch PT", Icon: CalendarIcon },
     { page: "plans", label: "Gói dịch vụ", Icon: DumbbellsIcon },
+    { page: "orders", label: "Đặt hàng", Icon: CartIcon },
     { page: "billing", label: "Hóa đơn", Icon: PageIcon },
     { page: "history", label: "Lịch sử", Icon: HourglassIcon },
     { page: "rewards", label: "Điểm & hạng", Icon: StarIcon },

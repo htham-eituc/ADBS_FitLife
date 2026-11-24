@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+import { getPagePath, getRoleHomePath } from "@/layouts/routes";
 import FitLifeIcon from "@/components/shared/FitLifeIcon";
 import {
   Sidebar as SidebarRoot,
@@ -19,7 +21,6 @@ import {
 export default function Sidebar({
   role,
   page,
-  onNavigate,
 }: PageNavigation & { role: Role }) {
   const { open, isHovered, isMobile, setOpenMobile } = useSidebar();
   const showContent = open || isHovered || isMobile;
@@ -28,18 +29,18 @@ export default function Sidebar({
   return (
     <SidebarRoot side="left" collapsible="icon">
       <SidebarHeader className="px-5 pt-5 pb-8">
-        <a
-          href="#sketch"
+        <Link
+          to={getRoleHomePath(role)}
           className="flex items-center gap-3"
           aria-label="FitLife"
         >
           <FitLifeIcon size={showContent ? "icon" : "icon-sm"} />
           {showContent && (
-            <span className="text-title-sm font-semibold text-gray-900">
+            <span className="font-heading text-title-sm font-semibold text-gray-900">
               FitLife
             </span>
           )}
-        </a>
+        </Link>
       </SidebarHeader>
       <SidebarContent className="overflow-y-auto px-5 duration-300 ease-linear">
         <nav aria-label="Điều hướng chính" className="mb-6">
@@ -52,8 +53,8 @@ export default function Sidebar({
             <SidebarMenu className="gap-1">
               {items.map((item) => (
                 <SidebarMenuItem key={item.page}>
-                  <button
-                    type="button"
+                  <Link
+                    to={getPagePath(role, item.page)}
                     aria-label={item.label}
                     aria-current={page === item.page ? "page" : undefined}
                     className={cn(
@@ -63,7 +64,6 @@ export default function Sidebar({
                         : "menu-item-inactive",
                     )}
                     onClick={() => {
-                      onNavigate(item.page);
                       setOpenMobile(false);
                     }}
                   >
@@ -79,7 +79,7 @@ export default function Sidebar({
                     {showContent && (
                       <span className="menu-item-text">{item.label}</span>
                     )}
-                  </button>
+                  </Link>
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
