@@ -30,7 +30,7 @@ export default function CheckIns() {
         action={
           <Button onClick={() => setManualOpen(true)}>
             <DoorIcon className="size-5" />
-            Mở cửa thủ công
+            Check in/out thủ công
           </Button>
         }
       />
@@ -97,7 +97,7 @@ export default function CheckIns() {
       <SketchDialog
         open={manualOpen}
         onOpenChange={setManualOpen}
-        title="Mở cửa thủ công"
+        title="Check in/out thủ công"
         actionLabel="Ghi nhận và mở cửa"
       >
         <FormSelect

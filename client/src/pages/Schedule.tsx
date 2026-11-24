@@ -1,4 +1,3 @@
-import PtAvailability from "@/components/shared/PtAvailability";
 import { firstPtSlot } from "@/data/pt-availability";
 import { useState } from "react";
 import { PageHeading } from "@/components/shared/MemberPage";

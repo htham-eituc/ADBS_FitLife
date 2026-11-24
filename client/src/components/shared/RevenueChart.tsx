@@ -6,7 +6,7 @@ import { SectionCard } from "./StaffPage";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { money } from "@/data/member";
-const chartFont = "var(--font-be-vietnam-pro)";
+const chartFont = "var(--font-ui)";
 const labelStyle = { fontFamily: chartFont, fontSize: "14px", fontWeight: 400 };
 const Chart = lazy(() => import("react-apexcharts"));
 

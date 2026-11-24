@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+import { getRoleHomePath } from "@/layouts/routes";
 import FitLifeIcon from "@/components/shared/FitLifeIcon";
 import UserRoleDropdown from "./UserRoleDropdown";
 import ProfileDropdown from "./ProfileDropdown";
@@ -61,16 +63,16 @@ export default function AppHeader({ role, onRoleChange }: RoleNavigation) {
             )}
           </Button>
 
-          <a
-            href="#sketch"
+          <Link
+            to={getRoleHomePath(role)}
             className="flex items-center gap-3 xl:hidden"
             aria-label="FitLife"
           >
             <FitLifeIcon size="icon-sm" />
-            <span className="text-title-sm font-semibold text-gray-900">
+            <span className="font-heading text-title-sm font-semibold text-gray-900">
               FitLife
             </span>
-          </a>
+          </Link>
 
           <Button
             variant="ghost"

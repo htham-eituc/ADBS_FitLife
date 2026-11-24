@@ -115,7 +115,9 @@ export function StatCard({
         >
           <InfoIcon aria-hidden="true" />
         </TooltipTrigger>
-        <TooltipContent role="tooltip" className="whitespace-normal">{hint}</TooltipContent>
+        <TooltipContent role="tooltip" className="whitespace-normal">
+          {hint}
+        </TooltipContent>
       </Tooltip>
     ) : null;
   if (icon) {
@@ -184,18 +186,22 @@ export function SectionCard({
   action,
   children,
   className,
+  titleClassName,
 }: {
   title: string;
   description?: ReactNode;
   action?: ReactNode;
   children: ReactNode;
   className?: string;
+  titleClassName?: string;
 }) {
   return (
     <Card className={className}>
       <CardHeader className="flex-row flex-wrap items-start justify-between gap-3">
         <div className="flex flex-col gap-1">
-          <CardTitle className="font-semibold">{title}</CardTitle>
+          <CardTitle className={`font-semibold ${titleClassName ?? ""}`}>
+            {title}
+          </CardTitle>
           {description && <CardDescription>{description}</CardDescription>}
         </div>
         {action && (

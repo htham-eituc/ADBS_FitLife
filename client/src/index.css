@@ -1,7 +1,11 @@
-@import "@fontsource/be-vietnam-pro/400.css" layer(base);
-@import "@fontsource/be-vietnam-pro/500.css" layer(base);
-@import "@fontsource/be-vietnam-pro/600.css" layer(base);
-@import "@fontsource/be-vietnam-pro/700.css" layer(base);
+@import "@fontsource/inter/400.css" layer(base);
+@import "@fontsource/inter/500.css" layer(base);
+@import "@fontsource/inter/600.css" layer(base);
+@import "@fontsource/inter/700.css" layer(base);
+@import "@fontsource/manrope/400.css" layer(base);
+@import "@fontsource/manrope/500.css" layer(base);
+@import "@fontsource/manrope/600.css" layer(base);
+@import "@fontsource/manrope/700.css" layer(base);
 
 @import "tailwindcss";
 @import "tw-animate-css";
@@ -11,7 +15,9 @@
 
 @theme {
   --font-*: initial;
-  --font-be-vietnam-pro: "Be Vietnam Pro", sans-serif;
+  --font-ui: "Inter", sans-serif;
+  --font-sans: "Inter", sans-serif;
+  --font-heading: "Manrope", sans-serif;
 
   --breakpoint-*: initial;
   --breakpoint-2xsm: 375px;
@@ -130,8 +136,21 @@
     cursor: pointer;
   }
 
+  html {
+    @apply font-ui;
+  }
+
   body {
-    @apply relative z-1 bg-gray-50 font-be-vietnam-pro font-normal;
+    @apply relative z-1 bg-gray-50 font-ui font-normal;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading;
   }
 }
 

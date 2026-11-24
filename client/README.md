@@ -1,6 +1,6 @@
 ﻿# FitLife Frontend
 
-A lightweight UI sketch built with React, TypeScript, Vite, Tailwind CSS v4, and TailAdmin components. The interface uses the **Modern** palette, **Be Vietnam Pro**, and a light theme.
+A lightweight UI sketch built with React, TypeScript, Vite, React Router, Tailwind CSS v4, and TailAdmin components. The interface uses the **Modern** palette, **Inter (UI) and Manrope (headings and KPIs)**, and a light theme.
 
 ## Run and check
 
@@ -27,10 +27,10 @@ src/
 ├── data/             # Demo data: member, branch catalog/stock, front desk, staff/payroll, reports
 ├── hooks/            # Mobile breakpoint detection
 ├── icons/            # SVG components used by the sketch
-├── layouts/          # MainLayout, roles and per-role navigation (navigation.ts)
+├── layouts/          # MainLayout, role menus (navigation.ts), URL mapping (routes.ts)
 ├── pages/            # Member screens plus front-desk/, sales/, trainer/, manager/, director/, gate/
 ├── utils/            # Tailwind class merging
-├── App.tsx           # Renders the sketch inside MainLayout
+├── App.tsx           # Routes screens inside MainLayout
 ├── main.tsx          # React entry point
 └── index.css         # TailAdmin styles, font imports, and theme tokens
 ```
@@ -66,7 +66,7 @@ import { Badge } from '@/components/ui/badge';
 <Badge color="primary" variant="light">Selected</Badge>
 ```
 
-Keep the template's component styling. Typography uses locally bundled Be Vietnam Pro weights 400, 500, 600, and 700 via `@fontsource/be-vietnam-pro`. The font token is `--font-be-vietnam-pro`.
+Keep the template's component styling. Typography uses locally bundled Inter for UI text and Manrope for headings and KPIs, with weights 400, 500, 600, and 700 via `@fontsource/inter` and `@fontsource/manrope`. The font tokens are `--font-ui` and `--font-heading`. Charts use Inter for labels, legends, and tooltips.
 
 The shared logo is [FitLifeIcon.tsx](./src/components/shared/FitLifeIcon.tsx), using the supplied dumbbell SVG and TailAdmin's default icon-button variants. The favicon is [fitlife-icon.svg](./public/images/logo/fitlife-icon.svg); its primary color is stored separately as `#465FFF`.
 
@@ -111,6 +111,30 @@ Staff screens reuse `PageHeading`, `InfoTable`, `DataTable`, `SketchDialog`, `Fo
 
 TailAdmin Free React Dashboard **2.5.1**, based on commit `486ed748b21e032a4432effeca4ef3684fa223d3` from the [official repository](https://github.com/TailAdmin/free-react-tailwind-admin-dashboard).
 
-The integration keeps the template's component styles, with FitLife branding, the Modern color tokens, Be Vietnam Pro, and a reduced demo layout. Icons are imported directly. Scoped ESLint exceptions preserve upstream shared exports and mobile synchronization effects.
+The integration keeps the template's component styles, with FitLife branding, the Modern color tokens, Inter and Manrope, and a reduced demo layout. Icons are imported directly. Scoped ESLint exceptions preserve upstream shared exports and mobile synchronization effects.
 
 Retain [TAILADMIN-LICENSE.md](./TAILADMIN-LICENSE.md) when distributing the TailAdmin-derived code.
+
+## Frontend URLs
+
+Each screen has a browser URL, defined in `src/layouts/routes.ts`. Menu links, direct entry, reload, and browser Back/Forward use the same route mapping. The role selector navigates to the selected role's first screen; the URL determines the displayed role and menu.
+
+| Role | URLs |
+|---|---|
+| Member | `/member/schedule`, `/member/plans`, `/member/orders`, `/member/billing`, `/member/history`, `/member/rewards`, `/member/profile` |
+| Reception | `/reception/members`, `/reception/pos`, `/reception/check-ins`, `/reception/pt-bookings`, `/reception/member-care` |
+| Sales | `/sales/pos`, `/sales/stock-receipts`, `/sales/inventory` |
+| Trainer | `/trainer/schedule`, `/trainer/reviews`, `/trainer/payslip` |
+| Branch manager | `/admin/catalog`, `/admin/staff`, `/admin/payroll`, `/admin/reports` |
+| Director | `/director/reports`, `/director/tiers` |
+| Access gate | `/gate` |
+
+`/` redirects to `/member/schedule`. Role base URLs (`/member`, `/admin`, `/reception`, `/sales`, `/trainer`, `/director`) redirect to that role's first screen. Legacy member paths such as `/schedule` and `/plans` redirect to their `/member/...` equivalents, preserving query strings and fragments. Unknown URLs show a not-found screen.
+
+These routes belong to the frontend UI demo; they do not add authentication or backend API endpoints. For static production hosting, configure SPA fallback so frontend paths serve `client/dist/index.html`; keep asset files and backend API routes separate. Vite dev and preview support direct entry to frontend paths.
+
+### Member ordering preview
+
+`/member/orders` reuses Card, Badge, Button, SelectField and InputGroup for a marketplace product grid, plus the member DataTable, InfoTable, Tabs, form fields, and SketchDialog for cart and order history. Members can search the current branch's product fixtures, edit a cart, review their tier discount, confirm a pickup order, inspect it, and cancel a pending order. Payment takes place at the branch counter. Orders and reserved quantities use local component state only; navigating away or reloading resets this preview. No backend writes or payment requests are made.
+
+The product grid supports search, category filters, price/name sorting, product details, and adding items to the cart. Illustrative unbranded product images were generated with imagegen and are bundled under `public/images/products/`; they are demo assets rather than photos of actual inventory. Product image and description mapping lives in `src/data/product-visuals.ts`. No new CSS or UI dependencies are added for this layout.

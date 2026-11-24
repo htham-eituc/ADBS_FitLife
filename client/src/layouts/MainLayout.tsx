@@ -10,12 +10,11 @@ export default function MainLayout({
   role,
   onRoleChange,
   page,
-  onNavigate,
 }: PropsWithChildren<PageNavigation & RoleNavigation>) {
   return (
     <TooltipProvider>
       <SidebarProvider>
-        <Sidebar role={role} page={page} onNavigate={onNavigate} />
+        <Sidebar role={role} page={page} />
         <SidebarInset>
           <Header role={role} onRoleChange={onRoleChange} />
           <div
