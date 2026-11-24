@@ -1,6 +1,6 @@
-import FitLifeIcon from '@/components/shared/FitLifeIcon';
-import UserRoleDropdown from './UserRoleDropdown';
-import ProfileDropdown from './ProfileDropdown';
+import FitLifeIcon from "@/components/shared/FitLifeIcon";
+import UserRoleDropdown from "./UserRoleDropdown";
+import ProfileDropdown from "./ProfileDropdown";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
@@ -10,16 +10,16 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { useSidebar } from "@/components/ui/sidebar";
-import { HorizontalDotsIcon } from '@/icons/horizontal-dots';
-import { MenuTwoIcon } from '@/icons/menu-two';
-import { SearchIcon } from '@/icons/search';
-import { XIcon } from '@/icons/x';
+import { HorizontalDotsIcon } from "@/icons/horizontal-dots";
+import { MenuTwoIcon } from "@/icons/menu-two";
+import { SearchIcon } from "@/icons/search";
+import { XIcon } from "@/icons/x";
 import { cn } from "@/utils";
 import { useEffect, useRef, useState } from "react";
+import type { RoleNavigation } from "@/layouts/navigation";
 
-export default function AppHeader() {
+export default function AppHeader({ role, onRoleChange }: RoleNavigation) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [role, setRole] = useState('Hội viên');
   const [isApplicationMenuOpen, setApplicationMenuOpen] = useState(false);
   const { openMobile, toggleSidebar } = useSidebar();
 
@@ -61,9 +61,15 @@ export default function AppHeader() {
             )}
           </Button>
 
-          <a href="#sketch" className="flex items-center gap-3 xl:hidden" aria-label="FitLife">
+          <a
+            href="#sketch"
+            className="flex items-center gap-3 xl:hidden"
+            aria-label="FitLife"
+          >
             <FitLifeIcon size="icon-sm" />
-            <span className="text-title-sm font-semibold text-gray-900">FitLife</span>
+            <span className="text-title-sm font-semibold text-gray-900">
+              FitLife
+            </span>
           </a>
 
           <Button
@@ -115,7 +121,7 @@ export default function AppHeader() {
           )}
         >
           <div className="flex items-center gap-2 2xsm:gap-3">
-            <UserRoleDropdown role={role} onRoleChange={setRole} />
+            <UserRoleDropdown role={role} onRoleChange={onRoleChange} />
           </div>
           <ProfileDropdown role={role} />
         </div>

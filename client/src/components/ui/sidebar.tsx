@@ -15,7 +15,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { MenuTwoIcon } from '@/icons/menu-two';
+import { MenuTwoIcon } from "@/icons/menu-two";
 import { cn } from "@/utils";
 import { mergeProps } from "@base-ui/react/merge-props";
 import { useRender } from "@base-ui/react/use-render";
@@ -92,7 +92,6 @@ function SidebarProvider({
   const toggleSidebar = React.useCallback(() => {
     return isMobile ? setOpenMobile((open) => !open) : setOpen((open) => !open);
   }, [isMobile, setOpen, setOpenMobile]);
-
 
   // Adds a keyboard shortcut to toggle the sidebar.
   React.useEffect(() => {
