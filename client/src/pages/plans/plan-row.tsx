@@ -11,26 +11,26 @@ interface PlanRowProps {
 }
 export default function PlanRow({ plan, onView }: PlanRowProps) {
   return (
-    <TableRow className="h-16 border-b border-gray-100 dark:border-gray-800">
+    <TableRow className="h-16 border-b border-gray-100">
       <TableCell className="min-w-44 py-3 ps-5 text-start sm:ps-6">
         <div className="flex items-center gap-3">
-          <div className="flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
+          <div className="flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gray-100">
             <DumbbellsIcon className="size-4" />
           </div>
-          <span className="text-sm font-medium whitespace-nowrap text-gray-800 dark:text-white/90">
+          <span className="text-sm font-medium whitespace-nowrap text-gray-800">
             {plan.name}
           </span>
         </div>
       </TableCell>
-      <TableCell className="min-w-44 px-4 py-3 text-start text-sm whitespace-nowrap text-gray-700 dark:text-gray-400">
+      <TableCell className="min-w-44 px-4 py-3 text-start text-sm whitespace-nowrap text-gray-700">
         {plan.service}
       </TableCell>
-      <TableCell className="min-w-32 px-4 py-3 text-start text-sm whitespace-nowrap text-gray-700 dark:text-gray-400">
+      <TableCell className="min-w-32 px-4 py-3 text-start text-sm whitespace-nowrap text-gray-700">
         {plan.end
           ? `${formatDate(plan.start)} – ${formatDate(plan.end)}`
           : "Không giới hạn"}
       </TableCell>
-      <TableCell className="min-w-36 px-4 py-3 text-start text-sm whitespace-nowrap text-gray-700 dark:text-gray-400">
+      <TableCell className="min-w-36 px-4 py-3 text-start text-sm whitespace-nowrap text-gray-700">
         {plan.remaining}
       </TableCell>
       <TableCell className="min-w-28 px-4 py-3 text-start text-sm whitespace-nowrap">

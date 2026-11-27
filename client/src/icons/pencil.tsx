@@ -2,7 +2,7 @@ import type { IconProps } from "@/icons/types";
 
 export function PencilIcon(props: IconProps) {
   return (
-    <svg
+    <svg data-slot="icon"
       width={21}
       height={21}
       viewBox="0 0 21 21"

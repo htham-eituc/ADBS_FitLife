@@ -34,7 +34,7 @@ export default function CardHeader({
       )}
     >
       <div>
-        <CardTitle className="text-lg font-semibold text-gray-800 dark:text-white/90">
+        <CardTitle className="text-lg font-semibold text-gray-800">
           {title}
         </CardTitle>
       </div>
@@ -56,7 +56,7 @@ export default function CardHeader({
         <Button
           disabled
           variant="outline"
-          className="h-10 shrink-0 px-3.5 text-gray-700 sm:px-4 sm:py-2.5 dark:text-gray-300"
+          className="h-10 shrink-0 px-3.5 text-gray-700 sm:px-4 sm:py-2.5"
         >
           <CalendarIcon className="size-5" />
           <span className="hidden sm:inline">{dateRange}</span>

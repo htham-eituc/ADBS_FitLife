@@ -32,6 +32,7 @@ export const homeBranch = {
 export const servicePackages = [
   {
     id: "GYM03",
+    image: "/images/packages/gym.jpg",
     name: "Gym 3 tháng",
     type: "Gym",
     months: 3,
@@ -41,6 +42,7 @@ export const servicePackages = [
   },
   {
     id: "GYM06",
+    image: "/images/packages/gym.jpg",
     name: "Gym 6 tháng",
     type: "Gym",
     months: 6,
@@ -50,6 +52,7 @@ export const servicePackages = [
   },
   {
     id: "GYM12",
+    image: "/images/packages/gym.jpg",
     name: "Gym 12 tháng",
     type: "Gym",
     months: 12,
@@ -59,6 +62,7 @@ export const servicePackages = [
   },
   {
     id: "YOGA03",
+    image: "/images/packages/yoga1.jpg",
     name: "Yoga 3 tháng",
     type: "Yoga",
     months: 3,
@@ -68,6 +72,7 @@ export const servicePackages = [
   },
   {
     id: "YOGA12",
+    image: "/images/packages/yoga1.jpg",
     name: "Yoga 12 tháng",
     type: "Yoga",
     months: 12,
@@ -77,6 +82,7 @@ export const servicePackages = [
   },
   {
     id: "GX06",
+    image: "/images/packages/groupx.jpg",
     name: "GroupX 6 tháng",
     type: "GroupX",
     months: 6,
@@ -86,6 +92,7 @@ export const servicePackages = [
   },
   {
     id: "PT10",
+    image: "/images/packages/pt.jpg",
     name: "PT 10 buổi",
     type: "PT 1-1",
     months: 3,
@@ -95,6 +102,7 @@ export const servicePackages = [
   },
   {
     id: "PT20",
+    image: "/images/packages/pt2.jpg",
     name: "PT 20 buổi",
     type: "PT 1-1",
     months: 6,
@@ -104,6 +112,7 @@ export const servicePackages = [
   },
   {
     id: "SPA01",
+    image: "/images/packages/spaticket.jpg",
     name: "Vé Spa lẻ",
     type: "Spa",
     months: null,

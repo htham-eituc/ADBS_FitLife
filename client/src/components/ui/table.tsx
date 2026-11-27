@@ -104,11 +104,7 @@ const Table: React.FC<TableProps> = ({
 };
 
 const TableHeader: React.FC<TableHeaderProps> = ({ children, className }) => {
-  return (
-    <thead className={cn(className, "bg-brand-50 dark:bg-brand-500/15")}>
-      {children}
-    </thead>
-  );
+  return <thead className={cn(className, "bg-brand-50")}>{children}</thead>;
 };
 
 const TableBody: React.FC<TableBodyProps> = ({ children, className }) => {
@@ -134,7 +130,7 @@ const TableCell: React.FC<TableCellProps> = ({
     <CellTag
       className={cn(
         className,
-        isHeader && "text-sm font-semibold text-brand-700 dark:text-brand-300",
+        isHeader && "text-sm font-semibold text-brand-700",
       )}
       {...props}
     >

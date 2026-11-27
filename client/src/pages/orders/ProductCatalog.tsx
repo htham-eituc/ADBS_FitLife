@@ -1,10 +1,11 @@
+import ProductRating from "@/components/shared/ProductRating";
 import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetFooter,
-} from "@/components/ui/sheet";
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { BoxIcon } from "@/icons/box";
@@ -15,6 +16,7 @@ import { MenuTwoIcon } from "@/icons/menu-two";
 import type { ComponentType } from "react";
 import type { IconProps } from "@/icons/types";
 import { useState } from "react";
+import { useSearchParams } from "react-router";
 import {
   SectionCard,
   SelectField,
@@ -41,16 +43,32 @@ import { SearchIcon } from "@/icons/search";
 import { homeBranch } from "@/data/branch";
 import { money } from "@/data/member";
 import { productVisuals } from "@/data/product-visuals";
+import { cn } from "@/utils";
 
 export type CatalogProduct = {
   id: string;
   name: string;
   type: string;
   price: number;
-  stock: number;
+  stock?: number;
+  image?: string;
+  duration?: string;
 };
+function CatalogImage({ product, className }: { product: CatalogProduct; className: string }) {
+  const image = product.image || productVisuals[product.id]?.image;
+  const Icon = product.type === "Gói dịch vụ" ? DumbbellsIcon : BoxIcon;
+  return image ? (
+    <img src={image} alt={product.name} width={320} height={320} loading="lazy" className={cn(className, product.type === "Gói dịch vụ" && "object-cover object-center")} />
+  ) : (
+    <div className={`${className} flex flex-col items-center justify-center gap-3 bg-gray-100 p-3 text-black`}>
+      <Icon aria-hidden="true" className="size-8" />
+      <span className="whitespace-normal text-center text-sm font-medium">{product.name}</span>
+    </div>
+  );
+}
 const CATEGORY_ICONS: Record<string, ComponentType<IconProps>> = {
   "Tất cả": MenuTwoIcon,
+  "Gói dịch vụ": DumbbellsIcon,
   "Đồ uống": BoxIcon,
   "Thực phẩm bổ sung": HeartIcon,
   "Phụ kiện": DumbbellsIcon,
@@ -73,7 +91,19 @@ export default function ProductCatalog({
   onAdd: (product: CatalogProduct, quantity: number) => void;
 }) {
   const [query, setQuery] = useState("");
-  const [category, setCategory] = useState("Tất cả");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const requestedCategory = searchParams.get("category");
+  const category = requestedCategory === "services"
+    ? "Gói dịch vụ"
+    : requestedCategory && products.some((product) => product.type === requestedCategory)
+      ? requestedCategory
+      : "Tất cả";
+  const setCategory = (value: string) => {
+    const nextParams = new URLSearchParams(searchParams);
+    if (value === "Tất cả") nextParams.delete("category");
+    else nextParams.set("category", value === "Gói dịch vụ" ? "services" : value);
+    setSearchParams(nextParams);
+  };
   const [sort, setSort] = useState(SORT_OPTIONS[0]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
@@ -109,7 +139,7 @@ export default function ProductCatalog({
             : 0,
     );
   return (
-    <div className="grid items-start gap-4 lg:grid-cols-[220px_minmax(0,1fr)]">
+    <div className="grid items-start gap-4 lg:grid-cols-[260px_minmax(0,1fr)]">
       <aside className="hidden lg:block">
         <SectionCard title="Danh mục" titleClassName="font-bold">
           <nav aria-label="Danh mục sản phẩm" className="flex flex-col gap-2">
@@ -179,34 +209,28 @@ export default function ProductCatalog({
           </Badge>
         </div>
         {visible.length ? (
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+          <div className="grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-3">
             {visible.map((product) => (
               <Card
                 key={product.id}
-                className="gap-0 overflow-hidden p-0 sm:p-0"
+                className="gap-0 overflow-hidden rounded-none border-0 p-0 sm:p-0"
               >
                 <Button
                   variant="ghost"
-                  className="h-auto w-full rounded-none p-0"
+                  className="group h-auto w-full overflow-hidden rounded-[13px] bg-[#F0EEED] p-0 hover:bg-[#F0EEED] lg:rounded-[20px]"
                   aria-label={`Xem chi tiết ${product.name}`}
                   onClick={() => selectProduct(product)}
                 >
-                  <img
-                    src={productVisuals[product.id].image}
-                    alt={product.name}
-                    width={320}
-                    height={320}
-                    loading="lazy"
-                    className="aspect-square w-full object-contain"
-                  />
+                  <CatalogImage product={product} className="aspect-square w-full object-contain transition-transform duration-500 group-hover:scale-110" />
                 </Button>
-                <CardHeader className="px-3 pt-3 pb-2">
-                  <CardTitle className="line-clamp-2 text-sm font-medium">
+                <CardHeader className="px-0 pt-3 pb-2">
+                  <CardTitle className="line-clamp-2 text-base font-bold xl:text-xl">
                     {product.name}
                   </CardTitle>
+                  <ProductRating productId={product.id} />
                 </CardHeader>
-                <CardContent className="space-y-2 px-3 pb-3">
-                  <CardTitle className="text-base font-semibold text-brand-600 tabular-nums sm:text-xl dark:text-brand-400">
+                <CardContent className="space-y-2 px-0 pb-3">
+                  <CardTitle className="text-xl font-bold text-black tabular-nums sm:text-2xl">
                     {money(
                       product.price -
                         Math.round((product.price * discountPercent) / 100),
@@ -214,7 +238,7 @@ export default function ProductCatalog({
                   </CardTitle>
                   {discountPercent > 0 && (
                     <div className="flex flex-wrap items-center gap-2">
-                      <Badge size="sm" color="primary">
+                      <Badge size="sm" color="error">
                         -{discountPercent}%
                       </Badge>
                       <CardDescription className="text-xs line-through">
@@ -227,10 +251,10 @@ export default function ProductCatalog({
                   </CardDescription>
                   <div className="flex flex-wrap items-center gap-2">
                     <StatusBadge
-                      status={product.stock > 0 ? "Còn hàng" : "Hết hàng"}
+                      status={product.stock === undefined ? "Đang bán" : product.stock > 0 ? "Còn hàng" : "Hết hàng"}
                     />
                     <CardDescription className="text-xs">
-                      Còn {product.stock}
+                      {product.stock === undefined ? product.duration : `Còn ${product.stock}`}
                     </CardDescription>
                   </div>
                 </CardContent>
@@ -273,29 +297,22 @@ export default function ProductCatalog({
           </SectionCard>
         )}
       </div>
-      <Sheet
+      <Dialog
         open={!!selected}
         onOpenChange={(open) => {
           if (!open) setSelectedId(null);
         }}
       >
-        <SheetContent
-          side="bottom"
-          className="mx-auto w-full max-w-lg overflow-y-auto rounded-t-2xl"
+        <DialogContent
+          className="max-h-[calc(100dvh-2rem)] overflow-y-auto"
         >
           {selected && (
             <>
-              <SheetHeader className="flex-row items-center gap-4 pr-8">
-                <img
-                  src={productVisuals[selected.id].image}
-                  alt={selected.name}
-                  width={112}
-                  height={112}
-                  className="size-24 shrink-0 rounded-lg border border-gray-200 object-contain sm:size-28"
-                />
+              <DialogHeader className="flex-row items-center gap-4 pr-8">
+                <CatalogImage product={selected} className="size-24 shrink-0 rounded-lg border border-gray-200 object-contain sm:size-28" />
                 <div className="min-w-0 space-y-2">
-                  <SheetTitle className="text-base">{selected.name}</SheetTitle>
-                  <CardTitle className="mb-0 text-2xl font-bold text-brand-600 dark:text-brand-400">
+                  <DialogTitle className="text-base">{selected.name}</DialogTitle>
+                  <CardTitle className="mb-0 text-2xl font-bold text-brand-600">
                     {money(
                       selected.price -
                         Math.round((selected.price * discountPercent) / 100),
@@ -311,9 +328,10 @@ export default function ProductCatalog({
                       </Badge>
                     </div>
                   )}
-                  <CardDescription>Kho: {selected.stock}</CardDescription>
+                  <ProductRating productId={selected.id} />
+                  <CardDescription>{selected.stock === undefined ? selected.duration : `Kho: ${selected.stock}`}</CardDescription>
                 </div>
-              </SheetHeader>
+              </DialogHeader>
               <Separator />
               <div className="flex items-center gap-2">
                 <CartIcon
@@ -339,7 +357,7 @@ export default function ProductCatalog({
                     id="product-quantity"
                     type="number"
                     min={1}
-                    max={available}
+                    max={Number.isFinite(available) ? available : undefined}
                     step={1}
                     value={quantity}
                     aria-invalid={!validQuantity}
@@ -365,12 +383,12 @@ export default function ProductCatalog({
               </Field>
               {!validQuantity && (
                 <CardDescription role="alert">
-                  Chọn số lượng nguyên từ 1 đến {available}.
+                  {Number.isFinite(available) ? `Chọn số lượng nguyên từ 1 đến ${available}.` : "Chọn số lượng nguyên lớn hơn 0."}
                 </CardDescription>
               )}
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <CardDescription>Thành tiền sau ưu đãi {tier}</CardDescription>
-                <CardTitle className="mb-0 text-xl font-bold text-brand-600 dark:text-brand-400">
+                <CardTitle className="mb-0 text-xl font-bold text-brand-600">
                   {validQuantity
                     ? money(
                         selected.price * quantity -
@@ -382,7 +400,7 @@ export default function ProductCatalog({
                 </CardTitle>
               </div>
               <Separator />
-              <SheetFooter>
+              <DialogFooter className="m-0 p-0">
                 <Button
                   className="w-full"
                   size="lg"
@@ -396,11 +414,11 @@ export default function ProductCatalog({
                 >
                   Thêm vào giỏ hàng
                 </Button>
-              </SheetFooter>
+              </DialogFooter>
             </>
           )}
-        </SheetContent>
-      </Sheet>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

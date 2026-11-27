@@ -31,7 +31,7 @@ export default function PtBookings() {
   return (
     <div className="space-y-6">
       <PageHeading
-        title="Lịch PT"
+        title="Lịch tập"
         description="Đặt hoặc hủy lịch PT 1-1 hộ hội viên tại quầy."
         action={
           <Button

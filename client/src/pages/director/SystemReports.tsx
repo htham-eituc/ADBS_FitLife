@@ -101,7 +101,7 @@ export default function SystemReports() {
         <TabsContent value="branches" className="space-y-6">
           <RevenueChart
             title="So sánh doanh thu chi nhánh"
-            description={`${period} và kỳ trước - Dữ liệu mẫu`}
+            description={`${period} và kỳ trước`}
             horizontal
             categories={branchRevenue.map((row) =>
               row.branch.replace("Chi nhánh ", ""),

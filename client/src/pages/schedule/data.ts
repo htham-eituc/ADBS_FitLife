@@ -11,7 +11,7 @@ export const INITIAL_EVENTS: CalendarEvent[] = [
     extendedProps: {
       calendar: "Success",
       branch: "Chi nhánh Quận 1",
-      trainer: "HLV Minh (mẫu)",
+      trainer: "HLV Minh",
       status: "Đã hoàn thành",
     },
   },
@@ -24,7 +24,7 @@ export const INITIAL_EVENTS: CalendarEvent[] = [
     extendedProps: {
       calendar: "Warning",
       branch: "Chi nhánh Quận 1",
-      trainer: "HLV Minh (mẫu)",
+      trainer: "HLV Minh",
       status: "Chờ xác nhận",
     },
   },
@@ -37,7 +37,7 @@ export const INITIAL_EVENTS: CalendarEvent[] = [
     extendedProps: {
       calendar: "Primary",
       branch: "Chi nhánh Quận 1",
-      trainer: "HLV Minh (mẫu)",
+      trainer: "HLV Minh",
       status: "Đã đặt",
     },
   },
@@ -50,7 +50,7 @@ export const INITIAL_EVENTS: CalendarEvent[] = [
     extendedProps: {
       calendar: "Primary",
       branch: "Chi nhánh Quận 1",
-      trainer: "HLV Minh (mẫu)",
+      trainer: "HLV Minh",
       status: "Đã đặt",
     },
   },

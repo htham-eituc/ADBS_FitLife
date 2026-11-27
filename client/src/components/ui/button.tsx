@@ -2,45 +2,32 @@ import { cn } from "@/utils/index";
 import { Button as ButtonPrimitive } from "@base-ui/react/button";
 import { cva, type VariantProps } from "class-variance-authority";
 
+// Shopco button variants, with existing FitLife sizes and Base UI render support.
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:outline-hidden active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none aria-invalid:border-red-500 aria-invalid:ring-3 aria-invalid:ring-red-500/20 dark:aria-invalid:border-red-500/50 dark:aria-invalid:ring-red-500/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5 rtl:[&_svg[data-flip-rtl]]:-scale-x-100",
+  "group/button [--icon-color:#000] inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-full text-sm font-medium transition-colors duration-200 outline-none focus-visible:ring-2 focus-visible:ring-black/30 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 aria-invalid:ring-2 aria-invalid:ring-red-500 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5",
   {
     variants: {
       variant: {
-        default:
-          "bg-brand-500 text-white shadow-theme-xs hover:bg-brand-600 focus-visible:ring-3 focus-visible:ring-brand-500/20 disabled:bg-brand-200 disabled:text-white dark:bg-brand-500 dark:hover:bg-brand-600 dark:disabled:bg-brand-800 dark:disabled:text-brand-400",
+        default: "[--icon-color:#fff] bg-black text-white hover:bg-black/90",
+        destructive: "[--icon-color:#fff] bg-[#FF3333] text-white hover:bg-[#FF3333]/90",
         outline:
-          "border-gray-300 bg-transparent text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 focus-visible:ring-3 focus-visible:ring-gray-300/50 disabled:border-gray-200 disabled:bg-white disabled:text-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700/50 dark:hover:text-white dark:disabled:border-gray-800 dark:disabled:bg-gray-900 dark:disabled:text-gray-600",
-        ghost:
-          "border-none bg-transparent text-gray-700 hover:bg-gray-50 hover:text-gray-800 focus-visible:ring-3 focus-visible:ring-gray-300/50 disabled:border-gray-200 disabled:bg-white disabled:text-gray-300 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700/50 dark:hover:text-white dark:disabled:border-gray-800 dark:disabled:bg-gray-900 dark:disabled:text-gray-600",
-        destructive:
-          "bg-red-500 text-white shadow-theme-xs hover:bg-red-600 focus-visible:ring-3 focus-visible:ring-red-500/20 disabled:bg-red-200 disabled:text-white dark:bg-red-500 dark:hover:bg-red-600 dark:disabled:bg-red-950 dark:disabled:text-red-400",
-        link: "h-auto! p-0! font-normal text-brand-500 hover:text-brand-600 dark:text-brand-400 dark:hover:text-brand-300",
+          "border border-black/10 bg-white text-black hover:bg-[#F0F0F0]",
+        secondary: "bg-[#F0F0F0] text-black hover:bg-[#F0F0F0]/80",
+        ghost: "bg-transparent text-black hover:bg-[#F0F0F0]",
+        link: "h-auto! p-0! text-black underline-offset-4 hover:underline",
       },
       size: {
-        default:
-          "h-10 gap-2 rounded-[10px] px-4 py-2.5 [&:has(>svg:first-child)]:ps-3 [&:has(>svg:last-child)]:pe-3",
-        xs: "h-8 gap-1.5 rounded-lg px-3 py-1.5 in-data-[slot=button-group]:rounded-lg [&:has(>svg:first-child)]:ps-2.5 [&:has(>svg:last-child)]:pe-2.5",
-        sm: "h-9 gap-1.5 rounded-lg px-4 py-2 in-data-[slot=button-group]:rounded-lg [&:has(>svg:first-child)]:ps-3 [&:has(>svg:last-child)]:pe-3",
-        lg: "h-11 gap-2 rounded-[10px] px-5 py-3 [&:has(>svg:first-child)]:ps-4 [&:has(>svg:last-child)]:pe-4",
-        icon: "size-10 rounded-[10px]",
-        "icon-xs": "size-8 rounded-lg in-data-[slot=button-group]:rounded-lg",
-        "icon-sm": "size-9 rounded-lg in-data-[slot=button-group]:rounded-lg",
-        "icon-lg": "size-11 rounded-[10px]",
+        default: "h-11 gap-2 px-6 py-3",
+        xs: "h-8 gap-1.5 px-3 text-xs",
+        sm: "h-9 gap-1.5 px-4 text-sm",
+        lg: "h-[52px] gap-2 px-8 py-4",
+        icon: "size-10 p-0",
+        "icon-xs": "size-8 p-0",
+        "icon-sm": "size-9 p-0",
+        "icon-lg": "size-11 p-0",
       },
     },
-    compoundVariants: [
-      {
-        variant: "ghost",
-        size: ["default", "xs", "sm", "lg"],
-        className:
-          "text-brand-500 hover:text-brand-600 dark:text-brand-400 dark:hover:text-brand-300",
-      },
-    ],
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
+    defaultVariants: { variant: "default", size: "default" },
   },
 );
 

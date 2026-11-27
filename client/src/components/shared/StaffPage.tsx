@@ -134,7 +134,7 @@ export function StatCard({
           {badge}
         </CardHeader>
         <CardContent className="space-y-2">
-          <CardTitle className="mb-0 text-3xl font-semibold text-brand-600 tabular-nums dark:text-brand-400">
+          <CardTitle className="mb-0 text-3xl font-semibold text-brand-600 tabular-nums">
             {value}
           </CardTitle>
           {hint && !hintInTooltip && <CardDescription>{hint}</CardDescription>}
@@ -147,8 +147,7 @@ export function StatCard({
       size="sm"
       className={cn(
         "gap-3",
-        highlighted &&
-          "border-brand-200 bg-brand-50 dark:border-brand-500/30 dark:bg-brand-500/15",
+        highlighted && "border-brand-200 bg-brand-50",
         className,
       )}
     >
@@ -172,7 +171,7 @@ export function StatCard({
         )}
         {badge}
       </div>
-      <CardTitle className="mb-0 text-2xl font-semibold text-brand-600 dark:text-brand-400">
+      <CardTitle className="mb-0 text-2xl font-semibold text-brand-600">
         {value}
       </CardTitle>
       {hint && !hintInTooltip && <CardDescription>{hint}</CardDescription>}
@@ -235,7 +234,7 @@ export function BarList({
             >
               {item.label}
             </Badge>
-            <span className="font-medium whitespace-nowrap text-gray-800 dark:text-white/90">
+            <span className="font-medium whitespace-nowrap text-gray-800">
               {format(item.value)}
               {item.note && (
                 <span className="ms-2 font-normal text-gray-500">

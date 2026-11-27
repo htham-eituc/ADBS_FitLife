@@ -18,7 +18,7 @@ function ToastViewport() {
           >
             <Toast.Title
               render={
-                <CardTitle className="mb-0 text-sm font-semibold text-brand-600 dark:text-brand-400" />
+                <CardTitle className="mb-0 text-sm font-semibold text-brand-600" />
               }
             />
             <Toast.Description render={<CardDescription />} />

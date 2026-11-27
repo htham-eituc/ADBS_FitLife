@@ -20,7 +20,7 @@ export const ACCOUNTS: Record<
     branch: HOME_BRANCH,
   },
   trainer: {
-    name: "HLV Minh (mẫu)",
+    name: "HLV Minh",
     email: "hlv.minh@fitlife.example",
     branch: HOME_BRANCH,
   },

@@ -2,7 +2,7 @@ import type { IconProps } from "@/icons/types";
 
 export function StarIcon(props: IconProps) {
   return (
-    <svg
+    <svg data-slot="icon"
       xmlns="http://www.w3.org/2000/svg"
       width={20}
       height={20}

@@ -52,7 +52,7 @@ export default function CalendarEventItem({
     event.start && event.end
       ? formatTime(event.start) + " – " + formatTime(event.end)
       : eventInfo.timeText;
-  const trainer = event.extendedProps.trainer?.replace(" (mẫu)", "");
+  const trainer = event.extendedProps.trainer?.replace("", "");
   const detail = timeRange;
   return (
     <div

@@ -33,7 +33,7 @@ function ProgressTrack({ className, ...props }: ProgressPrimitive.Track.Props) {
   return (
     <ProgressPrimitive.Track
       className={cn(
-        "relative flex h-1.5 flex-1 items-center overflow-hidden rounded-xs bg-gray-200 dark:bg-gray-800",
+        "relative flex h-1.5 flex-1 items-center overflow-hidden rounded-full bg-gray-200",
         className,
       )}
       data-slot="progress-track"
@@ -50,7 +50,7 @@ function ProgressIndicator({
     <ProgressPrimitive.Indicator
       data-slot="progress-indicator"
       className={cn(
-        "h-full rounded-xs bg-linear-to-r from-brand-300 to-brand-600 transition-all duration-300 ease-in-out rtl:bg-linear-to-l",
+        "h-full rounded-full bg-black transition-all duration-300 ease-in-out rtl:bg-linear-to-l",
         className,
       )}
       {...props}
@@ -61,10 +61,7 @@ function ProgressIndicator({
 function ProgressLabel({ className, ...props }: ProgressPrimitive.Label.Props) {
   return (
     <ProgressPrimitive.Label
-      className={cn(
-        "text-start text-sm font-medium text-gray-700 dark:text-gray-300",
-        className,
-      )}
+      className={cn("text-start text-sm font-medium text-gray-700", className)}
       data-slot="progress-label"
       {...props}
     />
@@ -75,7 +72,7 @@ function ProgressValue({ className, ...props }: ProgressPrimitive.Value.Props) {
   return (
     <ProgressPrimitive.Value
       className={cn(
-        "ms-auto text-end text-sm font-medium text-gray-500 tabular-nums [unicode-bidi:isolate] dark:text-gray-400",
+        "ms-auto text-end text-sm font-medium text-gray-500 tabular-nums [unicode-bidi:isolate]",
         className,
       )}
       data-slot="progress-value"

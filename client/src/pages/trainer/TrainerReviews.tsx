@@ -13,7 +13,7 @@ import { trainerReviews } from "@/data/staff";
 function Stars({ value }: { value: number }) {
   return (
     <span
-      className="inline-flex gap-0.5 text-amber-400"
+      className="inline-flex gap-0.5 text-[#FFC633] [--icon-color:#FFC633]"
       aria-label={`${value} sao`}
     >
       {Array.from({ length: 5 }, (_, index) => (

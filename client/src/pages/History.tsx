@@ -100,7 +100,7 @@ export default function History() {
                   <InfoCell>
                     {event.extendedProps.status !== "Đã đặt" && (
                       <Button
-                        variant="ghost"
+                        variant="outline"
                         size="sm"
                         onClick={() => setSelected(event)}
                       >

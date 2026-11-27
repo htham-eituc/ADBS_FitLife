@@ -1,3 +1,5 @@
+import InfoList from "@/components/shared/InfoList";
+import { TierIcon } from "@/icons/tier";
 import { UsersIcon } from "@/icons/users";
 import { CalendarIcon } from "@/icons/calendar";
 import { HeartIcon } from "@/icons/heart";
@@ -25,8 +27,7 @@ import {
 } from "@/data/front-desk";
 import { formatDate, isoDate, money } from "@/data/member";
 
-const cell =
-  "px-4 py-3 text-start text-sm whitespace-nowrap text-gray-700 dark:text-gray-400";
+const cell = "px-4 py-3 text-start text-sm whitespace-nowrap text-gray-700";
 
 export default function Members() {
   const [registerOpen, setRegisterOpen] = useState(false);
@@ -97,10 +98,10 @@ export default function Members() {
           ].join(" ")
         }
         renderRow={(item) => (
-          <TableRow className="h-16 border-b border-gray-100 dark:border-gray-800">
+          <TableRow className="h-16 border-b border-gray-100">
             <TableCell className="min-w-44 py-3 ps-5 text-start sm:ps-6">
               <div className="flex flex-col">
-                <span className="text-sm font-medium text-gray-800 dark:text-white/90">
+                <span className="text-sm font-medium text-gray-800">
                   {item.name}
                 </span>
                 <span className="text-xs text-gray-500">{item.id}</span>
@@ -108,7 +109,7 @@ export default function Members() {
             </TableCell>
             <TableCell className={cell}>{item.phone}</TableCell>
             <TableCell className={cell}>
-              <Badge size="sm" color={tierColor(item.tier)}>
+              <Badge size="sm" color={tierColor(item.tier)}><TierIcon tier={item.tier} />
                 {item.tier}
               </Badge>
             </TableCell>
@@ -175,10 +176,10 @@ export default function Members() {
               <span className="text-lg font-semibold text-gray-800">
                 {selected.name}
               </span>
-              <Badge color={tierColor(selected.tier)}>{selected.tier}</Badge>
+              <Badge color={tierColor(selected.tier)}><TierIcon tier={selected.tier} />{selected.tier}</Badge>
               <StatusBadge status={selected.status} />
             </div>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <InfoList>
               <InfoField label="CCCD" value={selected.idCard} />
               <InfoField label="Giới tính" value={selected.gender} />
               <InfoField
@@ -197,15 +198,15 @@ export default function Members() {
                 label="Ưu đãi hiện tại"
                 value={`${tierDiscount(selected.tier)}%`}
               />
-            </div>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            </InfoList>
+            <InfoList>
               <InfoField label="Mã thẻ/QR" value={selected.cardCode} />
               <InfoField
                 label="Gói hiện có"
                 value={selected.plans}
-                className="sm:col-span-2"
+
               />
-            </div>
+            </InfoList>
             <Separator />
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <FormInput

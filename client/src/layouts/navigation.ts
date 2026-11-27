@@ -6,7 +6,6 @@ import { CalendarIcon } from "@/icons/calendar";
 import { CartIcon } from "@/icons/cart";
 import { ChartIcon } from "@/icons/chart";
 import { DoorIcon } from "@/icons/door";
-import { DumbbellsIcon } from "@/icons/dumbbells";
 import { HeartIcon } from "@/icons/heart";
 import { HourglassIcon } from "@/icons/hourglass";
 import { InboxIcon } from "@/icons/inbox";
@@ -81,12 +80,11 @@ export const roleLabel = (role: Role) =>
 
 export const NAVIGATION: Record<Role, NavItem[]> = {
   member: [
-    { page: "schedule", label: "Lịch PT", Icon: CalendarIcon },
-    { page: "plans", label: "Gói dịch vụ", Icon: DumbbellsIcon },
-    { page: "orders", label: "Đặt hàng", Icon: CartIcon },
+    { page: "schedule", label: "Lịch tập", Icon: CalendarIcon },
+    { page: "orders", label: "Cửa hàng", Icon: CartIcon },
     { page: "billing", label: "Hóa đơn", Icon: PageIcon },
     { page: "history", label: "Lịch sử", Icon: HourglassIcon },
-    { page: "rewards", label: "Điểm & hạng", Icon: StarIcon },
+    { page: "rewards", label: "Điểm và hạng", Icon: StarIcon },
     { page: "profile", label: "Hồ sơ", Icon: UserIcon },
   ],
   reception: [

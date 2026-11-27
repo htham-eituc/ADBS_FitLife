@@ -82,7 +82,7 @@ export default function PtAvailability({
         </div>
       ) : (
         <CardDescription role="status">
-          Chưa có khung giờ trống trong dữ liệu mẫu cho chi nhánh và ngày đã
+          Chưa có khung giờ trống cho chi nhánh và ngày đã
           chọn.
         </CardDescription>
       )}
