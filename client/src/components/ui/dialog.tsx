@@ -28,7 +28,7 @@ function DialogOverlay({
     <DialogPrimitive.Backdrop
       data-slot="dialog-overlay"
       className={cn(
-        "fixed inset-0 isolate z-100 bg-black/50 duration-100 data-closed:animate-out data-closed:fade-out-0 data-open:animate-in data-open:fade-in-0 supports-backdrop-filter:backdrop-blur-xs dark:bg-black/70",
+        "fixed inset-0 isolate z-100 bg-black/50 duration-100 data-closed:animate-out data-closed:fade-out-0 data-open:animate-in data-open:fade-in-0 supports-backdrop-filter:backdrop-blur-xs",
         className,
       )}
       {...props}
@@ -53,8 +53,8 @@ function DialogContent({
         data-slot="dialog-content"
         className={cn(
           fullScreen
-            ? "fixed inset-0 z-101 flex h-dvh w-screen max-w-none flex-col justify-between overflow-y-auto rounded-none border-none bg-white p-6 text-sm text-gray-700 shadow-none duration-100 outline-none data-closed:animate-out data-closed:fade-out-0 data-open:animate-in data-open:fade-in-0 sm:p-10 dark:bg-[#1E2635] dark:text-gray-300"
-            : "fixed inset-s-1/2 top-1/2 z-101 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-2xl border border-gray-200 bg-white p-6 text-sm text-gray-700 shadow-theme-lg duration-100 outline-none data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 sm:max-w-lg rtl:translate-x-1/2 dark:border-gray-800 dark:bg-[#1E2635] dark:text-gray-300",
+            ? "fixed inset-0 z-101 flex h-dvh w-screen max-w-none flex-col justify-between overflow-y-auto rounded-none border-none bg-white p-6 text-sm text-gray-700 shadow-none duration-100 outline-none data-closed:animate-out data-closed:fade-out-0 data-open:animate-in data-open:fade-in-0 sm:p-10"
+            : "fixed inset-s-1/2 top-1/2 z-101 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-[20px] border border-gray-200 bg-white p-6 text-sm text-gray-700 shadow-theme-lg duration-100 outline-none data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 sm:max-w-lg rtl:translate-x-1/2",
           className,
         )}
         {...props}
@@ -67,9 +67,9 @@ function DialogContent({
               <Button
                 variant="ghost"
                 className={cn(
-                  "rounded-full text-gray-400 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white",
+                  "rounded-full text-gray-400 hover:text-gray-700",
                   fullScreen
-                    ? "absolute inset-e-4 top-4 size-11 bg-gray-100 hover:bg-gray-200 sm:inset-e-6 sm:top-6 dark:bg-gray-800 dark:hover:bg-gray-700"
+                    ? "absolute inset-e-4 top-4 size-11 bg-gray-100 hover:bg-gray-200 sm:inset-e-6 sm:top-6"
                     : "absolute inset-e-3 top-3",
                 )}
                 size={fullScreen ? "icon-lg" : "icon-sm"}
@@ -127,7 +127,7 @@ function DialogTitle({ className, ...props }: DialogPrimitive.Title.Props) {
     <DialogPrimitive.Title
       data-slot="dialog-title"
       className={cn(
-        "font-heading text-lg font-semibold text-gray-800 dark:text-white/90",
+        "font-heading text-lg font-semibold text-gray-800",
         className,
       )}
       {...props}
@@ -142,10 +142,7 @@ function DialogDescription({
   return (
     <DialogPrimitive.Description
       data-slot="dialog-description"
-      className={cn(
-        "font-heading text-sm text-gray-500 dark:text-gray-400",
-        className,
-      )}
+      className={cn("font-heading text-sm text-gray-500", className)}
       {...props}
     />
   );

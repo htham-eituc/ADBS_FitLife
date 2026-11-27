@@ -1,3 +1,4 @@
+import { TierIcon } from "@/icons/tier";
 import { useState } from "react";
 import {
   InfoCell,
@@ -39,7 +40,7 @@ export default function TierSettings() {
           {TIERS.map((tier, index) => (
             <TableRow key={tier.name}>
               <InfoCell>
-                <Badge color={tierColor(tier.name)}>{tier.name}</Badge>
+                <Badge color={tierColor(tier.name)}><TierIcon tier={tier.name} />{tier.name}</Badge>
               </InfoCell>
               <InfoCell>
                 {tier.threshold

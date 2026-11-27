@@ -1,4 +1,4 @@
-// Adapted from TailAdmin's MonthlySalesChart (MIT); reuse the project's card and palette.
+// FitLife report chart using the Shopco monochrome palette.
 // https://github.com/TailAdmin/free-react-tailwind-admin-dashboard/blob/main/src/components/ecommerce/MonthlySalesChart.tsx
 import { lazy, Suspense } from "react";
 import type { ApexOptions } from "apexcharts";
@@ -25,7 +25,7 @@ export default function RevenueChart({
   horizontal = false,
 }: Props) {
   const options: ApexOptions = {
-    colors: ["#465fff", "#0ba5ec"],
+    colors: ["#000000", "#999999"],
     chart: {
       type: "bar",
       fontFamily: chartFont,

@@ -148,7 +148,7 @@ export default function PointOfSale() {
               Thêm
             </Button>
           </div>
-          <div className="max-w-full overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-800">
+          <div className="max-w-full overflow-x-auto rounded-xl border border-gray-200">
             <Table centeredColumns={[2, 3, 4]}>
               <TableHeader className="border-b border-brand-200">
                 <TableRow>
@@ -189,11 +189,11 @@ export default function PointOfSale() {
                   />
                 </TableRow>
               </TableHeader>
-              <TableBody className="divide-y divide-gray-100 dark:divide-gray-800">
+              <TableBody className="divide-y divide-gray-100 ">
                 {lines.length ? (
                   lines.map((line, index) => (
                     <TableRow key={`${line.key}-${index}`}>
-                      <TableCell className="px-4 py-3 text-sm whitespace-nowrap text-gray-700 dark:text-gray-400">
+                      <TableCell className="px-4 py-3 text-sm whitespace-nowrap text-gray-700">
                         {line.key}
                       </TableCell>
                       <TableCell className="px-4 py-3 text-sm">
@@ -241,7 +241,7 @@ export default function PointOfSale() {
                   </TableRow>
                 )}
               </TableBody>
-              <TableFooter className="border-t border-gray-200 bg-gray-50 text-sm dark:border-gray-800 dark:bg-white/3">
+              <TableFooter className="border-t border-gray-200 bg-gray-50 text-sm">
                 {[
                   { label: "Tổng tiền hàng", value: money(subtotal) },
                   {
@@ -261,17 +261,17 @@ export default function PointOfSale() {
                     key={row.label}
                     className={
                       row.label === "Thực trả"
-                        ? "border-y border-brand-200 bg-brand-50 dark:border-brand-500/30 dark:bg-brand-500/15"
+                        ? "border-y border-brand-200 bg-brand-50"
                         : undefined
                     }
                   >
                     <TableCell
                       colSpan={4}
-                      className="px-4 py-3 text-right font-semibold whitespace-nowrap text-gray-700 dark:text-gray-300"
+                      className="px-4 py-3 text-right font-semibold whitespace-nowrap text-gray-700"
                     >
                       {row.label}
                     </TableCell>
-                    <TableCell className="px-4 py-3 text-center font-semibold whitespace-nowrap text-brand-600 tabular-nums dark:text-brand-400">
+                    <TableCell className="px-4 py-3 text-center font-semibold whitespace-nowrap text-brand-600 tabular-nums">
                       {row.value}
                     </TableCell>
                     <TableCell />

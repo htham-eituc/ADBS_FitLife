@@ -182,7 +182,7 @@ export const staffMembers = [
   },
   {
     id: "NV014",
-    name: "HLV Minh (mẫu)",
+    name: "HLV Minh",
     phone: "0911 000 014",
     position: "HLV",
     branch: "Chi nhánh Quận 1",
@@ -192,7 +192,7 @@ export const staffMembers = [
   },
   {
     id: "NV015",
-    name: "HLV An (mẫu)",
+    name: "HLV An",
     phone: "0911 000 015",
     position: "HLV",
     branch: "Chi nhánh Quận 1",
@@ -202,7 +202,7 @@ export const staffMembers = [
   },
   {
     id: "NV016",
-    name: "HLV Trang (mẫu)",
+    name: "HLV Trang",
     phone: "0911 000 016",
     position: "HLV",
     branch: "Chi nhánh Quận 1",
@@ -273,7 +273,7 @@ export const salaryHistory: Record<string, { from: string; salary: number }[]> =
 export const transfers = [
   {
     id: "DC07",
-    staff: "HLV Minh (mẫu)",
+    staff: "HLV Minh",
     from: "Chi nhánh Quận 3",
     to: "Chi nhánh Quận 1",
     position: "HLV",
@@ -300,7 +300,7 @@ export const payrollRows = [
   },
   {
     id: "NV014",
-    name: "HLV Minh (mẫu)",
+    name: "HLV Minh",
     position: "HLV",
     base: 9000000,
     sessions: 14,
@@ -308,7 +308,7 @@ export const payrollRows = [
   },
   {
     id: "NV015",
-    name: "HLV An (mẫu)",
+    name: "HLV An",
     position: "HLV",
     base: 9500000,
     sessions: 21,
@@ -316,7 +316,7 @@ export const payrollRows = [
   },
   {
     id: "NV016",
-    name: "HLV Trang (mẫu)",
+    name: "HLV Trang",
     position: "HLV",
     base: 9000000,
     sessions: 17,
@@ -352,7 +352,7 @@ export type PayrollRow = (typeof payrollRows)[number];
 export const payrollIssues = [
   {
     id: "SL1",
-    trainer: "HLV Minh (mẫu)",
+    trainer: "HLV Minh",
     session: "LH2140",
     date: isoDate(-15),
     detail:

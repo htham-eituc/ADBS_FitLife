@@ -2,7 +2,7 @@ import type { IconProps } from "@/icons/types";
 
 export function ChevronRightIcon(props: IconProps) {
   return (
-    <svg
+    <svg data-slot="icon"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="none"

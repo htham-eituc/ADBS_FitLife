@@ -45,7 +45,7 @@ export default function TransferAppointments({
   );
   return (
     <SectionCard
-      title="Lịch PT ảnh hưởng bởi điều chuyển"
+      title="Lịch tập ảnh hưởng bởi điều chuyển"
       description={homeBranch.name}
     >
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

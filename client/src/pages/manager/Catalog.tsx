@@ -1,3 +1,4 @@
+import InfoList from "@/components/shared/InfoList";
 import { useState } from "react";
 import InfoField from "@/components/shared/InfoField";
 import {
@@ -133,7 +134,7 @@ export default function Catalog() {
               <div className="flex gap-2">
                 <Button
                   size="sm"
-                  variant="ghost"
+                  variant="outline"
                   onClick={() => {
                     setEffective(isoDate());
                     setEditor({ kind, item: { ...item }, creating: false });
@@ -186,7 +187,7 @@ export default function Catalog() {
               </Button>
             }
           >
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <InfoList>
               <InfoField label="Địa chỉ" value={branch.address} />
               <InfoField label="Số điện thoại" value={branch.phone} />
               <InfoField
@@ -210,19 +211,19 @@ export default function Catalog() {
                   </div>
                 }
               />
-            </div>
+            </InfoList>
           </SectionCard>
           <SectionCard
             title="Cửa kiểm soát"
             description="Cửa dùng chung cho các gói dịch vụ."
           >
-            <div className="flex flex-wrap gap-2">
+            <InfoList><InfoField label="Cửa đang sử dụng" value={<div className="flex flex-wrap gap-2">
               {branch.gates.map((gate) => (
                 <Badge size="sm" color="gray" key={gate}>
                   {gate}
                 </Badge>
               ))}
-            </div>
+            </div>} /></InfoList>
           </SectionCard>
         </TabsContent>
         <TabsContent value="packages">{table("package", packages)}</TabsContent>

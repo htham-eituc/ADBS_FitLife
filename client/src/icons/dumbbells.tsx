@@ -3,7 +3,7 @@ import type { IconProps } from "./types";
 // From the user-supplied dumbbells-2-svgrepo-com.svg.
 export function DumbbellsIcon(props: IconProps) {
   return (
-    <svg
+    <svg data-slot="icon"
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

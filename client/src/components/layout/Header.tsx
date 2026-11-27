@@ -1,133 +1,144 @@
-import { Link } from "react-router";
-import { getRoleHomePath } from "@/layouts/routes";
-import FitLifeIcon from "@/components/shared/FitLifeIcon";
-import UserRoleDropdown from "./UserRoleDropdown";
-import ProfileDropdown from "./ProfileDropdown";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Field } from "@/components/ui/field";
+// Shopco TopNavbar layout, without search; existing role URLs remain unchanged.
+import { useState } from "react";
+import { Link, NavLink } from "react-router";
 import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/components/ui/input-group";
-import { useSidebar } from "@/components/ui/sidebar";
-import { HorizontalDotsIcon } from "@/icons/horizontal-dots";
+  NAVIGATION,
+  roleLabel,
+  type RoleNavigation,
+} from "@/layouts/navigation";
+import { getPagePath } from "@/layouts/routes";
+import UserRoleDropdown from "./UserRoleDropdown";
+import { UserIcon } from "@/icons/user";
+import { CartIcon } from "@/icons/cart";
 import { MenuTwoIcon } from "@/icons/menu-two";
-import { SearchIcon } from "@/icons/search";
 import { XIcon } from "@/icons/x";
 import { cn } from "@/utils";
-import { useEffect, useRef, useState } from "react";
-import type { RoleNavigation } from "@/layouts/navigation";
+import { useMemberOrders } from "@/data/member-orders";
 
-export default function AppHeader({ role, onRoleChange }: RoleNavigation) {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [isApplicationMenuOpen, setApplicationMenuOpen] = useState(false);
-  const { openMobile, toggleSidebar } = useSidebar();
-
-  const toggleApplicationMenu = () => {
-    setApplicationMenuOpen(!isApplicationMenuOpen);
-  };
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if ((event.metaKey || event.ctrlKey) && event.key === "k") {
-        event.preventDefault();
-        inputRef.current?.focus();
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
-
-  return (
-    <header className="sticky top-0 z-50 flex w-full shrink-0 border-gray-200 bg-white xl:border-b dark:border-gray-800 dark:bg-gray-900">
-      <div className="flex grow flex-col items-center justify-between xl:flex-row xl:px-6">
-        {/* Left side content */}
-        <div className="flex w-full items-center justify-between gap-2 border-b border-gray-200 px-3 py-3 sm:gap-4 xl:justify-normal xl:border-b-0 xl:px-0 xl:py-4 dark:border-gray-800">
-          <Button
-            variant="outline"
-            size="icon"
-            className="text-gray-500 lg:size-11 dark:text-gray-400"
-            onClick={toggleSidebar}
-            aria-label="Toggle Sidebar"
-          >
-            {openMobile ? (
-              <XIcon className="size-6" />
-            ) : (
-              <MenuTwoIcon className="size-auto! rtl:-scale-x-100" />
-            )}
-          </Button>
-
-          <Link
-            to={getRoleHomePath(role)}
-            className="flex items-center gap-3 xl:hidden"
-            aria-label="FitLife"
-          >
-            <FitLifeIcon size="icon-sm" />
-            <span className="font-heading text-title-sm font-semibold text-gray-900">
-              FitLife
-            </span>
-          </Link>
-
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={toggleApplicationMenu}
-            aria-label="Toggle application menu"
-            className="text-gray-700 xl:hidden dark:text-gray-400"
-          >
-            <HorizontalDotsIcon />
-          </Button>
-
-          <div className="hidden xl:block">
-            <form onSubmit={(e) => e.preventDefault()}>
-              <Field className="xl:w-107.5">
-                <InputGroup className="border-gray-200 bg-transparent dark:border-gray-800 dark:bg-white/3">
-                  <InputGroupAddon align="inline-start">
-                    <SearchIcon className="size-5 text-gray-500 dark:text-gray-400" />
-                  </InputGroupAddon>
-                  <InputGroupInput
-                    ref={inputRef}
-                    type="text"
-                    placeholder="Tìm kiếm hoặc nhập lệnh..."
-                    aria-label="Tìm kiếm"
-                    className="text-gray-800 placeholder:text-gray-400 dark:text-white/90 dark:placeholder:text-white/30"
-                  />
-                  <InputGroupAddon align="inline-end">
-                    <Badge
-                      variant="light"
-                      color="gray"
-                      size="sm"
-                      className="cursor-pointer gap-0.5 rounded-lg border border-gray-200 bg-gray-50 px-1.75 py-[4.5px] text-xs tracking-[-0.2px] text-gray-500 shadow-none dark:border-gray-800 dark:bg-white/3 dark:text-gray-400"
-                    >
-                      <span>⌘</span>
-                      <span>K</span>
-                    </Badge>
-                  </InputGroupAddon>
-                </InputGroup>
-              </Field>
-            </form>
-          </div>
-        </div>
-
-        {/* Right side content */}
-        <div
-          className={cn(
-            "flex w-full items-center justify-between gap-4 px-5 py-4 shadow-theme-md xl:flex xl:justify-end xl:px-0 xl:shadow-none",
-            isApplicationMenuOpen ? "flex" : "hidden",
-          )}
+export default function Header({ role, onRoleChange }: RoleNavigation) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const { count } = useMemberOrders();
+  const pages = NAVIGATION[role];
+  const links = () => (
+    <>
+      <NavLink
+        to="/"
+        state={{ role }}
+        end
+        onClick={() => setMenuOpen(false)}
+        className={({ isActive }) =>
+          cn(
+            "shrink-0 whitespace-nowrap py-2 text-sm transition-colors hover:text-black",
+            isActive ? "font-semibold text-black" : "text-black/70",
+          )
+        }
+      >
+        Trang chủ
+      </NavLink>
+      {pages.map((item) => (
+        <NavLink
+          key={item.page}
+          to={getPagePath(role, item.page)}
+          end
+          onClick={() => setMenuOpen(false)}
+          className={({ isActive }) =>
+            cn(
+              "shrink-0 whitespace-nowrap py-2 text-sm transition-colors hover:text-black",
+              isActive
+                ? "font-semibold text-black underline underline-offset-8"
+                : "text-black/70",
+            )
+          }
         >
-          <div className="flex items-center gap-2 2xsm:gap-3">
-            <UserRoleDropdown role={role} onRoleChange={onRoleChange} />
-          </div>
-          <ProfileDropdown role={role} />
-        </div>
+          {item.label}
+        </NavLink>
+      ))}
+    </>
+  );
+  return (
+    <>
+      <div className="bg-black px-4 py-2 text-center text-xs text-white sm:text-sm">
+        FitLife Hub <span className="mx-2 text-white/40">/</span>{" "}
+        {roleLabel(role)}
       </div>
-    </header>
+      <header className="sticky top-0 z-50 bg-white">
+        <div className="mx-auto flex max-w-frame items-center gap-2 px-4 py-5 sm:gap-3 md:gap-5 md:py-6 xl:px-0">
+          <button
+            type="button"
+            aria-label={menuOpen ? "Đóng menu" : "Mở menu"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="shrink-0 rounded-full p-1 xl:hidden"
+          >
+            {menuOpen ? (
+              <XIcon className="size-5" />
+            ) : (
+              <MenuTwoIcon className="size-5" />
+            )}
+          </button>
+          <Link
+            to="/"
+            state={{ role }}
+            aria-label="FitLife - trang chủ"
+            onClick={() => setMenuOpen(false)}
+            className="mr-auto shrink-0 font-integral text-xl font-bold sm:text-2xl xl:mr-3 lg:text-[32px]"
+          >
+            FITLIFE.
+          </Link>
+          <nav
+            aria-label={`Các trang ${roleLabel(role)}`}
+            className="hidden min-w-0 flex-1 items-center gap-5 overflow-x-auto xl:flex"
+          >
+            {links()}
+          </nav>
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+            <UserRoleDropdown
+              role={role}
+              onRoleChange={(next) => {
+                setMenuOpen(false);
+                onRoleChange(next);
+              }}
+            />
+            {role === "member" && (
+              <>
+                <Link
+                  to={`${getPagePath(role, "orders")}?tab=cart`}
+                  aria-label={`Giỏ hàng, ${count} sản phẩm`}
+                  onClick={() => setMenuOpen(false)}
+                  className="relative rounded-full p-1 hover:bg-[#F0F0F0]"
+                >
+                  <CartIcon aria-hidden="true" className="size-5 sm:size-6" />
+                  {count > 0 && (
+                    <span
+                      aria-hidden="true"
+                      className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-black px-1 text-[10px] font-bold leading-none text-white ring-2 ring-white"
+                    >
+                      {count}
+                    </span>
+                  )}
+                </Link>
+                <Link
+                  to={getPagePath(role, "profile")}
+                  aria-label="Hồ sơ hội viên"
+                  className="hidden rounded-full p-1 hover:bg-[#F0F0F0] min-[375px]:block"
+                >
+                  <UserIcon className="size-5 sm:size-6" />
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
+        {menuOpen && (
+          <nav
+            id="mobile-navigation"
+            aria-label="Menu trên điện thoại"
+            className="grid grid-cols-2 gap-x-4 border-t border-black/10 px-4 py-4 xl:hidden"
+          >
+            {links()}
+          </nav>
+        )}
+      </header>
+    </>
   );
 }

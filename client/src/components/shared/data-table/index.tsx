@@ -1,4 +1,4 @@
-// TailAdmin Table Three presentation, shared by member invoices and service plans.
+// Shared transaction table using Shopco borders, typography and controls.
 import { Fragment, useState, type ReactNode } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -16,11 +16,11 @@ import CardFooter from "./card-footer";
 import EmptyState from "./empty-state";
 
 const headerClasses = [
-  "h-11 min-w-44 py-3 ps-5 text-start text-sm font-semibold text-gray-500 sm:ps-6 dark:text-gray-400",
-  "h-11 min-w-44 px-4 py-3 text-start text-sm font-semibold text-gray-500 dark:text-gray-400",
-  "h-11 min-w-32 px-4 py-3 text-start text-sm font-semibold text-gray-500 dark:text-gray-400",
-  "h-11 min-w-36 px-4 py-3 text-start text-sm font-semibold text-gray-500 dark:text-gray-400",
-  "h-11 min-w-28 px-4 py-3 text-start text-sm font-semibold text-gray-500 dark:text-gray-400",
+  "h-11 min-w-44 py-3 ps-5 text-start text-sm font-semibold text-gray-500 sm:ps-6",
+  "h-11 min-w-44 px-4 py-3 text-start text-sm font-semibold text-gray-500",
+  "h-11 min-w-32 px-4 py-3 text-start text-sm font-semibold text-gray-500",
+  "h-11 min-w-36 px-4 py-3 text-start text-sm font-semibold text-gray-500",
+  "h-11 min-w-28 px-4 py-3 text-start text-sm font-semibold text-gray-500",
 ];
 const PAGE_SIZE = 7;
 
@@ -66,7 +66,7 @@ export default function DataTable<T extends { id: string }>({
     ? formatDate(dates[0]) + " – " + formatDate(dates[dates.length - 1])
     : emptyDateLabel;
   return (
-    <Card className="w-full max-w-full min-w-0 gap-0 overflow-hidden rounded-2xl border border-gray-200 bg-white p-0 sm:p-0 dark:border-gray-800 dark:bg-white/3">
+    <Card className="w-full max-w-full min-w-0 gap-0 overflow-hidden rounded-2xl border border-gray-200 bg-white p-0 sm:p-0">
       <CardHeader
         title={title}
         dateRange={dateRange}
@@ -80,7 +80,7 @@ export default function DataTable<T extends { id: string }>({
       <CardContent className="p-0">
         <ScrollArea className="w-full">
           <Table centeredColumns={getCenteredColumns(columns)}>
-            <TableHeader className="border-y border-gray-100 dark:border-gray-800">
+            <TableHeader className="border-y border-gray-100">
               <TableRow>
                 {columns.map((column, index) => (
                   <TableCell
@@ -97,7 +97,7 @@ export default function DataTable<T extends { id: string }>({
                 />
               </TableRow>
             </TableHeader>
-            <TableBody className="divide-y divide-gray-100 dark:divide-gray-800">
+            <TableBody className="divide-y divide-gray-100 ">
               {rows.length ? (
                 rows.map((row) => (
                   <Fragment key={row.id}>{renderRow(row)}</Fragment>

@@ -4,6 +4,8 @@ import { productVisuals } from "@/data/product-visuals";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { BoxIcon } from "@/icons/box";
 import { useState } from "react";
+import { useSearchParams } from "react-router";
+import { useMemberOrders, type CartLine, type Order } from "@/data/member-orders";
 import DataTable from "@/components/shared/data-table";
 import EmptyState from "@/components/shared/data-table/empty-state";
 import InfoField from "@/components/shared/InfoField";
@@ -29,34 +31,23 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { CartIcon } from "@/icons/cart";
 import { XIcon } from "@/icons/x";
-import { homeBranch, products } from "@/data/branch";
+import { homeBranch, products, servicePackages } from "@/data/branch";
 import { tierDiscount } from "@/data/front-desk";
 import { formatDate, isoDate, member, money } from "@/data/member";
 
-type CartLine = {
-  productId: string;
-  name: string;
-  price: number;
-  quantity: number;
-};
-type Order = {
-  id: string;
-  date: string;
-  branch: string;
-  receiver: string;
-  phone: string;
-  note: string;
-  lines: CartLine[];
-  subtotal: number;
-  discount: number;
-  total: number;
-  status: "Chờ xác nhận" | "Hủy";
-};
-
 export default function Orders() {
-  const [tab, setTab] = useState("products");
-  const [cart, setCart] = useState<CartLine[]>([]);
-  const [orders, setOrders] = useState<Order[]>([]);
+  const { cart, setCart, orders, setOrders, count } = useMemberOrders();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const requestedTab = searchParams.get("tab");
+  const tab = requestedTab === "cart" || requestedTab === "orders"
+    ? requestedTab
+    : "products";
+  const setTab = (value: string) => {
+    const nextParams = new URLSearchParams(searchParams);
+    if (value === "products") nextParams.delete("tab");
+    else nextParams.set("tab", value);
+    setSearchParams(nextParams);
+  };
   const [receiver, setReceiver] = useState(member.name);
   const [phone, setPhone] = useState(member.phone);
   const [note, setNote] = useState("");
@@ -78,28 +69,32 @@ export default function Orders() {
             .reduce((count, line) => count + line.quantity, 0),
         0,
       );
-  const catalog = products
-    .filter((product) => product.status === "Đang bán")
-    .map((product) => ({
-      ...product,
-      stock: product.stock - reserved(product.id),
-    }));
+  const catalog: CatalogProduct[] = [
+    ...servicePackages
+      .filter((plan) => plan.status === "Đang bán")
+      .map((plan) => ({
+        id: plan.id,
+        name: plan.name,
+        type: "Gói dịch vụ",
+        price: plan.price,
+        image: plan.image,
+        duration: plan.sessions ? `${plan.sessions} buổi` : `${plan.months} tháng`,
+      })),
+    ...products
+      .filter((product) => product.status === "Đang bán")
+      .map((product) => ({
+        ...product,
+        stock: product.stock - reserved(product.id),
+      })),
+  ];
   const quantityInCart = (id: string) =>
     cart.find((line) => line.productId === id)?.quantity ?? 0;
-  const validQuantity = (line: CartLine) =>
-    Number.isInteger(line.quantity) &&
-    line.quantity > 0 &&
-    line.quantity <=
-      (catalog.find((product) => product.id === line.productId)?.stock ?? 0);
+  const validQuantity = (line: CartLine) => {
+    const product = catalog.find((item) => item.id === line.productId);
+    return !!product && Number.isInteger(line.quantity) && line.quantity > 0 &&
+      (product.stock === undefined || line.quantity <= product.stock);
+  };
   const invalidCart = cart.some((line) => !validQuantity(line));
-  const count = cart.reduce(
-    (sum, line) =>
-      sum +
-      (Number.isInteger(line.quantity) && line.quantity > 0
-        ? line.quantity
-        : 0),
-    0,
-  );
   const subtotal = cart.reduce(
     (sum, line) => sum + (validQuantity(line) ? line.price * line.quantity : 0),
     0,
@@ -110,11 +105,12 @@ export default function Orders() {
     cart.length > 0 && !invalidCart && !!receiver.trim() && !!phone.trim();
 
   const canAddProduct = (product: CatalogProduct) =>
-    product.stock > 0 &&
-    quantityInCart(product.id) < product.stock &&
+    (product.stock === undefined || quantityInCart(product.id) < product.stock) &&
     !invalidCart;
   const getAvailableQuantity = (product: CatalogProduct) =>
-    Math.max(0, product.stock - quantityInCart(product.id));
+    product.stock === undefined
+      ? Number.POSITIVE_INFINITY
+      : Math.max(0, product.stock - quantityInCart(product.id));
   const addProduct = (product: CatalogProduct, quantity: number) => {
     if (
       !canAddProduct(product) ||
@@ -223,7 +219,7 @@ export default function Orders() {
                           <div className="flex items-center gap-3">
                             <Avatar size="lg" className="rounded-lg">
                               <AvatarImage
-                                src={productVisuals[line.productId].image}
+                                src={catalog.find((product) => product.id === line.productId)?.image || productVisuals[line.productId]?.image}
                                 alt={line.name}
                                 className="rounded-lg object-contain"
                               />
@@ -242,7 +238,7 @@ export default function Orders() {
                             max={
                               catalog.find(
                                 (product) => product.id === line.productId,
-                              )?.stock ?? 0
+                              )?.stock
                             }
                             step={1}
                             value={line.quantity}
@@ -338,8 +334,8 @@ export default function Orders() {
             </div>
             <SectionCard
               title="Tổng đơn hàng"
-              titleClassName="font-bold text-brand-700 dark:text-brand-300"
-              className="border-brand-200 bg-brand-50 dark:border-brand-800 dark:bg-brand-950"
+              titleClassName="font-bold text-brand-700"
+              className="border-brand-200 bg-brand-50"
               action={
                 <Badge size="sm" color="primary">
                   {count} sản phẩm
@@ -355,7 +351,7 @@ export default function Orders() {
                 <InfoField
                   label="Dự kiến thanh toán"
                   value={
-                    <span className="font-heading text-3xl font-bold text-brand-600 tabular-nums dark:text-brand-400">
+                    <span className="font-heading text-3xl font-bold text-brand-600 tabular-nums">
                       {money(total)}
                     </span>
                   }
@@ -444,9 +440,7 @@ export default function Orders() {
         <InfoField
           label="Dự kiến thanh toán tại quầy"
           value={
-            <span className="font-semibold text-brand-600 dark:text-brand-400">
-              {money(total)}
-            </span>
+            <span className="font-semibold text-brand-600">{money(total)}</span>
           }
         />
       </SketchDialog>
@@ -486,7 +480,7 @@ export default function Orders() {
             <InfoField
               label="Dự kiến thanh toán tại quầy"
               value={
-                <span className="font-semibold text-brand-600 dark:text-brand-400">
+                <span className="font-semibold text-brand-600">
                   {money(selected.total)}
                 </span>
               }

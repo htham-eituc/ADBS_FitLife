@@ -1,5 +1,10 @@
+import InfoList from "@/components/shared/InfoList";
+import { TierIcon } from "@/icons/tier";
 import { tierColor } from "@/data/tiers";
 import { useState } from "react";
+import { useSearchParams } from "react-router";
+import Plans from "./Plans";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PageHeading } from "@/components/shared/MemberPage";
 import SketchDialog from "@/components/shared/SketchDialog";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -22,17 +27,31 @@ import { member } from "@/data/member";
 import InfoField from "@/components/shared/InfoField";
 
 export default function Profile() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const tab = searchParams.get("tab") === "plans" ? "plans" : "info";
+  const setTab = (value: string) => {
+    const nextParams = new URLSearchParams(searchParams);
+    if (value === "plans") nextParams.set("tab", "plans");
+    else nextParams.delete("tab");
+    setSearchParams(nextParams);
+  };
   const [cardOpen, setCardOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   return (
     <div className="space-y-6">
       <PageHeading
         title="Hồ sơ hội viên"
-        description="Thông tin cá nhân và thẻ hội viên của bạn."
+        description="Thông tin cá nhân, thẻ hội viên và các gói dịch vụ đã mua."
       />
-      <Card className="relative overflow-hidden border border-gray-200 p-5 sm:p-6 lg:p-7 dark:border-gray-700">
+      <Tabs value={tab} onValueChange={setTab} className="gap-6">
+        <TabsList aria-label="Thông tin hồ sơ" className="overflow-visible">
+          <TabsTrigger value="info">Thông tin hội viên</TabsTrigger>
+          <TabsTrigger value="plans">Gói dịch vụ của bạn</TabsTrigger>
+        </TabsList>
+        <TabsContent value="info" className="space-y-6 text-black">
+      <Card className="relative overflow-hidden border border-gray-200 p-5 sm:p-6 lg:p-7">
         <div className="flex items-center justify-between gap-4">
-          <h2 className="text-base font-semibold text-gray-800 sm:text-lg dark:text-white/90">
+          <h2 className="text-base font-semibold text-gray-800 sm:text-lg">
             Thông tin cá nhân
           </h2>
           <Button
@@ -40,7 +59,6 @@ export default function Profile() {
             variant="outline"
             size="sm"
             onClick={() => setEditOpen(true)}
-            className="h-9 gap-2 px-3.5"
           >
             <PencilIcon className="size-4.5" />
             Chỉnh sửa
@@ -53,13 +71,13 @@ export default function Profile() {
             </AvatarFallback>
           </Avatar>
           <div className="flex flex-col gap-1">
-            <h3 className="text-base font-semibold text-gray-800 sm:text-lg dark:text-white/90">
+            <h3 className="text-base font-semibold text-gray-800 sm:text-lg">
               {member.name}
             </h3>
-            <div className="flex flex-wrap items-center gap-2 text-xs text-gray-500 sm:text-sm dark:text-gray-400">
+            <div className="flex flex-wrap items-center gap-2 text-xs text-gray-500 sm:text-sm">
               <Badge color="primary">Hội viên</Badge>
               <span
-                className="inline-block h-3.5 w-px bg-gray-300 dark:bg-gray-700"
+                className="inline-block h-3.5 w-px bg-gray-300"
                 aria-hidden="true"
               />
               <span>{member.branch}</span>
@@ -67,46 +85,46 @@ export default function Profile() {
           </div>
         </div>
         <Separator />
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          <Card size="sm" className="bg-gray-50">
+        <InfoList>
+
             <InfoField label="Họ tên" value={member.name} />
-            <Separator />
+
             <InfoField label="Email" value={member.email} />
-          </Card>
-          <Card size="sm" className="bg-gray-50">
+
+
             <InfoField label="Số điện thoại" value={member.phone} />
-            <Separator />
+
             <InfoField
               label="Vai trò"
               value={<Badge color="primary">Hội viên</Badge>}
             />
-          </Card>
-        </div>
+
+        </InfoList>
       </Card>
       <Card>
         <CardHeader className="flex-row flex-wrap items-center justify-between gap-3">
           <CardTitle className="font-semibold">Thông tin hội viên</CardTitle>
-          <Badge color={tierColor(member.tier)}>{member.tier}</Badge>
+          <Badge color={tierColor(member.tier)}><TierIcon tier={member.tier} />{member.tier}</Badge>
         </CardHeader>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <Card size="sm" className="bg-gray-50">
+        <InfoList>
+
             <InfoField
               label="Mã hội viên"
               value={<Badge color="primary">{member.id}</Badge>}
             />
-          </Card>
-          <Card size="sm" className="bg-gray-50">
+
+
             <InfoField
               label="Hạng hội viên"
               value={
-                <Badge color={tierColor(member.tier)}>{member.tier}</Badge>
+                <Badge color={tierColor(member.tier)}><TierIcon tier={member.tier} />{member.tier}</Badge>
               }
             />
-          </Card>
-          <Card size="sm" className="bg-gray-50">
+
+
             <InfoField label="Chi nhánh đăng ký" value={member.branch} />
-          </Card>
-        </div>
+
+        </InfoList>
         <CardFooter className="flex-wrap justify-between gap-3">
           <CardDescription>
             Dùng thẻ hội viên tại cửa kiểm soát để check-in.
@@ -117,12 +135,18 @@ export default function Profile() {
           </Button>
         </CardFooter>
       </Card>
+        </TabsContent>
+        <TabsContent value="plans" className="text-black">
+          <Plans embedded />
+        </TabsContent>
+      </Tabs>
       <SketchDialog
         open={editOpen}
         onOpenChange={setEditOpen}
         title="Chỉnh sửa thông tin cá nhân"
         actionLabel="Lưu thông tin"
       >
+        <InfoList>
         <Field>
           <FieldLabel htmlFor="profile-name">Họ tên</FieldLabel>
           <Input
@@ -149,6 +173,7 @@ export default function Profile() {
             defaultValue={member.phone}
           />
         </Field>
+        </InfoList>
       </SketchDialog>
       <SketchDialog
         open={cardOpen}
@@ -157,7 +182,7 @@ export default function Profile() {
       >
         <CardHeader>
           <CardTitle>{member.name}</CardTitle>
-          <Badge color={tierColor(member.tier)}>{member.tier}</Badge>
+          <Badge color={tierColor(member.tier)}><TierIcon tier={member.tier} />{member.tier}</Badge>
         </CardHeader>
         <InfoField label="Mã hội viên" value={member.id} />
         <InfoField label="Chi nhánh đăng ký" value={member.branch} />

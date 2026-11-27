@@ -15,15 +15,22 @@ import {
 import { Button } from "@/components/ui/button";
 import { plans, formatDate } from "@/data/member";
 
-export default function Plans() {
+export default function Plans({ embedded = false }: { embedded?: boolean }) {
   const [planRows, setPlanRows] = useState(plans);
   const [selected, setSelected] = useState<(typeof plans)[number] | null>(null);
   return (
     <div className="space-y-6">
-      <PageHeading
-        title="Gói dịch vụ"
-        description="Các gói đã mua, thời hạn và số buổi còn lại."
-      />
+      {embedded ? (
+        <div className="space-y-1">
+          <h2 className="text-2xl font-bold">Gói dịch vụ của bạn</h2>
+          <CardDescription>Các gói đã mua, thời hạn và số buổi còn lại.</CardDescription>
+        </div>
+      ) : (
+        <PageHeading
+          title="Gói dịch vụ"
+          description="Các gói đã mua, thời hạn và số buổi còn lại."
+        />
+      )}
       <SpaTickets
         tickets={planRows}
         onUse={(id) =>
@@ -63,7 +70,7 @@ export default function Plans() {
                   {selected.status}
                 </Badge>
               </CardHeader>
-              <CardTitle className="text-2xl font-semibold text-brand-600 dark:text-brand-400">
+              <CardTitle className="text-2xl font-semibold text-brand-600">
                 {selected.remaining}
               </CardTitle>
               <CardDescription>Số buổi/lượt sử dụng còn lại</CardDescription>

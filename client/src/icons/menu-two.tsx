@@ -2,7 +2,7 @@ import type { IconProps } from "@/icons/types";
 
 export function MenuTwoIcon(props: IconProps) {
   return (
-    <svg
+    <svg data-slot="icon"
       width={16}
       height={12}
       viewBox="0 0 16 12"

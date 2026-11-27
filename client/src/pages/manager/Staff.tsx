@@ -1,3 +1,4 @@
+import InfoList from "@/components/shared/InfoList";
 import TransferAppointments from "@/components/shared/TransferAppointments";
 import { useState } from "react";
 import FormSelect from "@/components/shared/FormSelect";
@@ -174,11 +175,11 @@ export default function Staff() {
       >
         {selected && (
           <>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <InfoList>
               <InfoField label="Chức vụ" value={selected.position} />
               <InfoField label="Chi nhánh hiện tại" value={selected.branch} />
               <InfoField label="Lương cơ bản" value={money(selected.salary)} />
-            </div>
+            </InfoList>
             <Tabs defaultValue="work">
               <TabsList>
                 <TabsTrigger value="work">Giai đoạn công tác</TabsTrigger>

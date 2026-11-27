@@ -25,10 +25,15 @@ export default function UserRoleDropdown({
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger
-        render={<Button variant="outline" />}
+        render={
+          <Button
+            variant="outline"
+            className="max-w-24 gap-1 px-2 sm:max-w-none sm:px-5"
+          />
+        }
         aria-label={`Vai trò hiện tại: ${roleLabel(role)}`}
       >
-        {roleLabel(role)}
+        <span className="truncate">{roleLabel(role)}</span>
         <ChevronDownIcon
           className={cn(
             "size-5 text-gray-500 duration-200 dark:text-gray-400",

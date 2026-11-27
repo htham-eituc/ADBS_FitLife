@@ -2,7 +2,7 @@ import type { IconProps } from "@/icons/types";
 
 export function HourglassIcon(props: IconProps) {
   return (
-    <svg
+    <svg data-slot="icon"
       width={28}
       height={28}
       viewBox="0 0 28 28"

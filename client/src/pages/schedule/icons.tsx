@@ -4,7 +4,7 @@ type IconType = SVGProps<SVGSVGElement>;
 
 export function ChevronLeftIcon(props: IconType) {
   return (
-    <svg
+    <svg data-slot="icon"
       xmlns="http://www.w3.org/2000/svg"
       width={24}
       height={24}
@@ -23,7 +23,7 @@ export function ChevronLeftIcon(props: IconType) {
 
 export function ChevronRightIcon(props: IconType) {
   return (
-    <svg
+    <svg data-slot="icon"
       xmlns="http://www.w3.org/2000/svg"
       width={24}
       height={24}
@@ -42,7 +42,7 @@ export function ChevronRightIcon(props: IconType) {
 
 export function PlusIcon(props: IconType) {
   return (
-    <svg
+    <svg data-slot="icon"
       xmlns="http://www.w3.org/2000/svg"
       width={24}
       height={24}
@@ -61,7 +61,7 @@ export function PlusIcon(props: IconType) {
 
 export function BookmarkIcon(props: IconType) {
   return (
-    <svg
+    <svg data-slot="icon"
       xmlns="http://www.w3.org/2000/svg"
       width={24}
       height={24}
@@ -80,7 +80,7 @@ export function BookmarkIcon(props: IconType) {
 
 export function CloseIcon(props: IconType) {
   return (
-    <svg
+    <svg data-slot="icon"
       xmlns="http://www.w3.org/2000/svg"
       width={24}
       height={24}

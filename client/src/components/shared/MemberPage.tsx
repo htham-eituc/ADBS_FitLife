@@ -21,7 +21,9 @@ export function PageHeading({
   return (
     <div className="flex flex-wrap items-center justify-between gap-3">
       <div>
-        <h1 className="text-title-lg font-semibold text-gray-800">{title}</h1>
+        <h1 className="text-[32px] font-bold leading-tight tracking-tight text-black md:text-[40px]">
+          {title}
+        </h1>
         <CardDescription>{description}</CardDescription>
       </div>
       {action && (
@@ -64,7 +66,7 @@ export function InfoTable({
 }
 export function InfoCell({ children }: { children?: ReactNode }) {
   return (
-    <TableCell className="px-4 py-3 text-start text-sm whitespace-nowrap text-gray-700 dark:text-gray-400 [&_[data-slot=card-description]]:text-xs">
+    <TableCell className="px-4 py-3 text-start text-sm whitespace-nowrap text-gray-700 [&_[data-slot=card-description]]:text-xs">
       {children}
     </TableCell>
   );

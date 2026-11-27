@@ -5,11 +5,6 @@ export const TIERS = [
 ] as const;
 
 export const tierColor = (tier: string) =>
-  tier === "Platinum" ? "primary" : tier === "Gold" ? "warning" : "gray";
+  tier === "Platinum" ? "primary" : "gray";
 
-export const tierTextClass = (tier: string) =>
-  tier === "Platinum"
-    ? "text-brand-600 dark:text-brand-400"
-    : tier === "Gold"
-      ? "text-amber-600 dark:text-orange-400"
-      : "text-gray-600 dark:text-gray-400";
+export const tierTextClass = (tier: string) => tier === "Platinum" ? "text-black" : "text-gray-700";

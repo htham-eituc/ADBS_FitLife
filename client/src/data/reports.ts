@@ -42,21 +42,21 @@ export const topProducts = [
 
 export const trainerPerformance = [
   {
-    trainer: "HLV An (mẫu)",
+    trainer: "HLV An",
     sessions: 21,
     cancelled: 1,
     rating: 4.8,
     reviews: 15,
   },
   {
-    trainer: "HLV Trang (mẫu)",
+    trainer: "HLV Trang",
     sessions: 17,
     cancelled: 2,
     rating: 4.6,
     reviews: 11,
   },
   {
-    trainer: "HLV Minh (mẫu)",
+    trainer: "HLV Minh",
     sessions: 14,
     cancelled: 1,
     rating: 4.4,

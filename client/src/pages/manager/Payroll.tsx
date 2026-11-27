@@ -11,12 +11,11 @@ import {
   StatCard,
   StatusBadge,
 } from "@/components/shared/StaffPage";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardDescription, CardTitle } from "@/components/ui/card";
+import { CardDescription } from "@/components/ui/card";
 import { TableRow } from "@/components/ui/table";
 import { homeBranch } from "@/data/branch";
-import { formatDate, money } from "@/data/member";
+import { money } from "@/data/member";
 import {
   CURRENT_PERIOD,
   PAYROLL_PERIODS,
@@ -67,7 +66,7 @@ export default function Payroll() {
         />
       </div>
 
-      {open && payrollIssues.length > 0 && (
+      {/* {open && payrollIssues.length > 0 && (
         <Card className="border-amber-200 bg-amber-50">
           <CardTitle className="mb-0 font-semibold">
             Sai lệch cần xử lý trước khi chốt ({payrollIssues.length})
@@ -81,7 +80,7 @@ export default function Payroll() {
             </CardDescription>
           ))}
         </Card>
-      )}
+      )} */}
 
       <SectionCard
         title={`Bảng lương ${period}`}

@@ -118,7 +118,7 @@ export default function InvoiceDetails({
               <CardDescription>
                 {paid ? "Tổng thực trả" : "Tổng cần thanh toán"}
               </CardDescription>
-              <CardTitle className="text-2xl font-semibold text-brand-600 dark:text-brand-400">
+              <CardTitle className="text-2xl font-semibold text-brand-600">
                 {money(selected.amount)}
               </CardTitle>
             </CardHeader>

@@ -8,11 +8,12 @@ import {
   useLocation,
   useNavigate,
 } from "react-router";
-import { APP_ROUTES, ROLE_BASE_PATHS, getRoleHomePath } from "./layouts/routes";
+import { APP_ROUTES, ROLE_BASE_PATHS, getRoleHomePath, getPagePath } from "./layouts/routes";
 import { Button } from "./components/ui/button";
 import { Card, CardDescription, CardTitle } from "./components/ui/card";
 import MainLayout from "./layouts/MainLayout";
 import { ROLES, type PageId } from "./layouts/navigation";
+import Home from "./pages/Home";
 import Schedule from "./pages/Schedule";
 import Plans from "./pages/Plans";
 import Orders from "./pages/Orders";
@@ -99,10 +100,10 @@ function NotFound() {
           Không tìm thấy trang
         </CardTitle>
         <CardDescription>
-          Đường dẫn này không tồn tại. Chọn bên dưới để quay về Lịch PT.
+          Đường dẫn này không tồn tại. Chọn bên dưới để quay về Lịch tập.
         </CardDescription>
         <Button render={<Link to={getRoleHomePath("member")} />}>
-          Về Lịch PT
+          Về Lịch tập
         </Button>
       </Card>
     </main>
@@ -117,10 +118,7 @@ function LegacyMemberRedirect({ to }: { to: string }) {
 export default function App() {
   return (
     <Routes>
-      <Route
-        path="/"
-        element={<Navigate to={getRoleHomePath("member")} replace />}
-      />
+      <Route path="/" element={<Home />} />
       {ROLES.filter(({ id }) => id !== "gate").map(({ id }) => (
         <Route
           key={id}
@@ -133,6 +131,13 @@ export default function App() {
           key={`legacy-${path}`}
           path={path.slice(ROLE_BASE_PATHS.member.length)}
           element={<LegacyMemberRedirect to={path} />}
+        />
+      ))}
+      {[getPagePath("member", "plans"), "/plans"].map((path) => (
+        <Route
+          key={path}
+          path={path}
+          element={<Navigate to={`${getPagePath("member", "profile")}?tab=plans`} replace />}
         />
       ))}
       <Route element={<ApplicationLayout />}>

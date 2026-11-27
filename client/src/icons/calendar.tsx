@@ -2,7 +2,7 @@ import type { IconProps } from "@/icons/types";
 
 export function CalendarIcon(props: IconProps) {
   return (
-    <svg
+    <svg data-slot="icon"
       width={24}
       height={24}
       viewBox="0 0 24 24"

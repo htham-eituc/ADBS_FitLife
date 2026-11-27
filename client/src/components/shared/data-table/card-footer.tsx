@@ -60,7 +60,7 @@ export default function CardFooter({
     <div className={cn("border-t-0 px-5 py-4 sm:px-6", className)}>
       {/* Mobile Pagination (< sm) */}
       <div className="flex w-full items-center justify-center gap-4 sm:hidden">
-        <span className="text-sm font-medium text-gray-700 dark:text-gray-400">
+        <span className="text-sm font-medium text-gray-700">
           {currentPage}/{totalPages}
         </span>
 
